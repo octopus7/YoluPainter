@@ -1,6 +1,7 @@
+[한국어](ko/GUIDE_SELECT.md) · [日本語](GUIDE_SELECT.md) · [English](en/GUIDE_SELECT.md)
+
 # 選択と変形
 
-[English](en/GUIDE_SELECT.md)
 
 選択範囲の作り方と使い方、覚えておく方法、レイヤーの移動・変形、コピーとペーストの頁です。選択範囲は 2D のキャンバスでも 3D ビューでも作れます。今の選択範囲は、テクスチャセットごとに `.ylp` へ保存されます。
 

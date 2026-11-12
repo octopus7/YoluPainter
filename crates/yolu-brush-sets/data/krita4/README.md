@@ -1,3 +1,5 @@
+[한국어](README.ko.md) · [English](README.md)
+
 # Krita 4 default brush tips
 
 The brush tip images in `brushes/` are taken unchanged from Krita's

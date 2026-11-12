@@ -4,7 +4,8 @@
 //! 英数字も同じフォントで揃える（egui の既定の Ubuntu Light と組まない）: 同じフォントなら、かなと英字の高さと太さが揃い、行の中で字の
 //! 大きさがばらつかない。egui の既定のフォントは、このフォントに無い記号（絵文字など）を補う後ろ盾として末尾に残す。
 //! 縦の位置はフォントの寸法（ascent 1802・descent 246・1 em = 2048）のとおりで、行の高さの真ん中が漢字の字面の真ん中に合うので、
-//! 補正（`FontTweak`）は入れない（`tests/gui_shell/fonts.rs` が字面の真ん中を測って確かめる）。
+//! 日本語・英字には補正（`FontTweak`）を入れない。韓国語の後ろ盾だけは、この行の寸法に合わせて縦位置を補正する
+//! （`tests/gui_shell/fonts.rs` が各言語の字面の真ん中を測って確かめる）。
 //!
 //! 下線（_）・ダッシュ（– — ―）・マイナス（−）・上線（‾ ¯）などは、原本のヒンティングの命令が、細い棒（0.3〜0.6 画素）の上下の縁を別々に
 //! 画素の格子へ丸め、両方が同じ線に落ちて厚み 0 になる大きさ（12 pt の `_` など）があり、egui は箱の高さが 0 の字を描かない。
@@ -26,12 +27,18 @@ pub(crate) const REGULAR_LINES: &[u8] =
 /// 太字の、細い字だけの抜粋（命令なし）。
 pub(crate) const BOLD_LINES: &[u8] =
     include_bytes!("../../assets/fonts/BIZUDPGothic-Bold-Lines.ttf");
+/// Korean syllables and Jamo, derived from Noto Sans CJK KR (SIL OFL 1.1).
+pub(crate) const HANGUL: &[u8] = include_bytes!("../../assets/fonts/YoluPainterHangul-Regular.otf");
+pub(crate) const HANGUL_BOLD: &[u8] =
+    include_bytes!("../../assets/fonts/YoluPainterHangul-Bold.otf");
 
 /// 同梱したフォントの名前（`FontDefinitions::font_data` の鍵）。
 pub const REGULAR_NAME: &str = "biz-udpgothic-regular";
 pub const BOLD_NAME: &str = "biz-udpgothic-bold";
 pub const REGULAR_LINES_NAME: &str = "biz-udpgothic-regular-lines";
 pub const BOLD_LINES_NAME: &str = "biz-udpgothic-bold-lines";
+pub const HANGUL_NAME: &str = "yolupainter-hangul";
+pub const HANGUL_BOLD_NAME: &str = "yolupainter-hangul-bold";
 
 /// フォントの定義（細い字の抜粋・普通・太字を先頭に置き、egui の既定のフォントを後ろに残す）。
 pub fn definitions() -> FontDefinitions {
@@ -50,6 +57,13 @@ pub fn definitions() -> FontDefinitions {
         BOLD_LINES_NAME.into(),
         FontData::from_static(BOLD_LINES).into(),
     );
+    // Match the Hangul ink center to the BIZ-based row metrics. The rendering
+    // regression checks regular/bold at 10–14 pt and 1×/1.5×/2× display scales.
+    for (name, bytes) in [(HANGUL_NAME, HANGUL), (HANGUL_BOLD_NAME, HANGUL_BOLD)] {
+        let mut data = FontData::from_static(bytes);
+        data.tweak.y_offset = -1.0;
+        fonts.font_data.insert(name.into(), data.into());
+    }
     // 抜粋が先頭: 同じ字を持つフォントのうち先のものが使われる
     fonts
         .families
@@ -57,14 +71,18 @@ pub fn definitions() -> FontDefinitions {
         .or_default()
         .splice(
             0..0,
-            [REGULAR_LINES_NAME.to_owned(), REGULAR_NAME.to_owned()],
+            [
+                REGULAR_LINES_NAME.to_owned(),
+                REGULAR_NAME.to_owned(),
+                HANGUL_NAME.to_owned(),
+            ],
         );
     // 均等幅は既定のフォント（Hack）のまま、日本語だけ同梱のフォントで補う
     fonts
         .families
         .entry(FontFamily::Monospace)
         .or_default()
-        .push(REGULAR_NAME.into());
+        .extend([HANGUL_NAME.into(), REGULAR_NAME.into()]);
     // 太字: 太字の抜粋 → 太字 → 普通の抜粋 → 普通 → 既定（記号の補い）
     let mut bold = vec![BOLD_LINES_NAME.to_owned(), BOLD_NAME.to_owned()];
     bold.extend(
@@ -74,6 +92,10 @@ pub fn definitions() -> FontDefinitions {
             .cloned()
             .unwrap_or_default(),
     );
+    // Keep the existing Latin/Japanese order, but use a real bold Hangul face
+    // before the regular Korean fallback.
+    let hangul_at = bold.iter().position(|name| name == HANGUL_NAME).unwrap();
+    bold.insert(hangul_at, HANGUL_BOLD_NAME.into());
     fonts.families.insert(FontFamily::Name(BOLD.into()), bold);
     fonts
 }

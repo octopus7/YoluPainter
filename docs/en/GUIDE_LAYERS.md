@@ -1,6 +1,7 @@
+[한국어](../ko/GUIDE_LAYERS.md) · [日本語](../GUIDE_LAYERS.md) · [English](GUIDE_LAYERS.md)
+
 # Layers and Channels
 
-[日本語](../GUIDE_LAYERS.md)
 
 This page covers creating and arranging layers, masks, adjustment layers and channels. For fill layers and the effects (filters and generators) you add to layers, see [GUIDE_FILL.md](GUIDE_FILL.md).
 

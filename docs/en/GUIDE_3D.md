@@ -1,6 +1,7 @@
+[한국어](../ko/GUIDE_3D.md) · [日本語](../GUIDE_3D.md) · [English](GUIDE_3D.md)
+
 # 3D View and Models
 
-[日本語](../GUIDE_3D.md)
 
 This page covers viewing a model in the 3D view, moving around it, and painting on its surface. Opening an FBX, posing, baking mesh maps, overlapping UVs and opening from Unity are here too.
 

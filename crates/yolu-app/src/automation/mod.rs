@@ -74,6 +74,7 @@ pub fn ops_lang(lang: Lang) -> yolu_ops::Lang {
     match lang {
         Lang::Ja => yolu_ops::Lang::Ja,
         Lang::En => yolu_ops::Lang::En,
+        Lang::Ko => yolu_ops::Lang::Ko,
     }
 }
 

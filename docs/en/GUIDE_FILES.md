@@ -1,6 +1,7 @@
+[한국어](../ko/GUIDE_FILES.md) · [日本語](../GUIDE_FILES.md) · [English](GUIDE_FILES.md)
+
 # Saving, Exporting and Importing
 
-[日本語](../GUIDE_FILES.md)
 
 This page covers saving a project (`.ylp`), the copy for distribution, recovery after a crash, exporting and importing PNG and PSD files, and the disk cache for large documents. Creating and opening projects is in [GUIDE_START.md](GUIDE_START.md).
 

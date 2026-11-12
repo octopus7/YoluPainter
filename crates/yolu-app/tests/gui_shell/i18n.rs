@@ -45,7 +45,7 @@ fn panels_draw_in_both_languages_without_clipped_text() {
 
 fn panels_draw_in_both_languages_without_clipped_text_gpu() {
     let mut snapshots = SnapshotResults::new();
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         for panel in 0..3 {
             let mut state = AppState::new(64, 64);
             state.set_lang(lang);
@@ -141,7 +141,7 @@ fn project_notices_and_conflicts_follow_the_language_without_changing_data() {
         .join("../../target/i18n-project-tests")
         .join(std::process::id().to_string());
     std::fs::create_dir_all(&root).unwrap();
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         let path = root.join(lang.pick("ja.ylp", "en.ylp"));
         let mut state = AppState::new(32, 32);
         state.set_lang(lang);
@@ -229,7 +229,7 @@ fn project_failures_are_told_apart_by_kind_in_both_languages() {
     let broken = root.join("broken.ylp");
     std::fs::write(&broken, b"not an archive").unwrap();
     let mut seen: Vec<Vec<String>> = Vec::new();
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         let mut state = AppState::new_in(32, 32, lang);
         let before = state.doc().id();
         let mut messages = Vec::new();
@@ -331,6 +331,9 @@ fn project_failures_are_told_apart_by_kind_in_both_languages() {
                 assert!(messages[1].contains("limit exceeded"), "{}", messages[1]);
                 assert!(messages[2].contains("Color mixing"), "{}", messages[2]);
             }
+            _ => unreachable!(
+                "This fixture has Japanese/English expectations; see korean_localization.rs"
+            ),
         }
         seen.push(messages);
     }
@@ -444,7 +447,7 @@ fn the_layer_memory_budget_has_one_name_in_both_languages() {
         "レイヤーのメモリ"
     );
     assert_eq!(setting_name(Lang::En, "source_budget_mib"), "Layer memory");
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         for key in ["undo_budget_mib", "source_budget_mib", "stroke_budget_mib"] {
             let name = setting_name(lang, key);
             assert!(
@@ -484,7 +487,7 @@ fn the_layer_memory_budget_has_one_name_in_both_languages() {
 fn opening_an_old_format_reports_what_io_noted_in_both_languages() {
     let fixtures =
         std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join("../yolu-io/tests/fixtures");
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         let mut state = AppState::new_in(32, 32, lang);
         state.act(Action::OpenProject(fixtures.join("format3.ylp")));
         let message = state.message().to_string();
@@ -505,6 +508,9 @@ fn opening_an_old_format_reports_what_io_noted_in_both_languages() {
                 assert!(!has_japanese(&message), "{message}");
                 assert!(!message.contains("notices"), "{message}");
             }
+            _ => unreachable!(
+                "This fixture has Japanese/English expectations; see korean_localization.rs"
+            ),
         }
     }
 }
@@ -513,7 +519,7 @@ fn opening_an_old_format_reports_what_io_noted_in_both_languages() {
 fn link_status_and_reasons_follow_the_language() {
     use yolu_app::livelink::{reason_text, LinkStatus, LinkView};
     use yolu_protocol::files::{Problem, Reason};
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         for status in [
             LinkStatus::Off,
             LinkStatus::Accepting,
@@ -992,7 +998,7 @@ fn the_first_start_follows_the_system_language_and_a_saved_language_wins_gpu() {
     };
     let menu = |lang: Lang| lang.pick("ファイル", "File");
     // 初めての起動（設定のファイルが無い）は OS の言語で始まる。最初の名前も画面の文もその言語で、読むだけではファイルを作らない
-    for system in Lang::ALL {
+    for system in [Lang::Ja, Lang::En] {
         let h = app_with_system_lang(&path, system);
         assert_eq!(h.lang(), system);
         assert_eq!(
@@ -1006,9 +1012,9 @@ fn the_first_start_follows_the_system_language_and_a_saved_language_wins_gpu() {
             .is_none());
         assert!(!path.exists());
     }
-    for system in Lang::ALL {
+    for system in [Lang::Ja, Lang::En] {
         // 保存した言語が先（OS の言語と同じでも違っても）
-        for saved in Lang::ALL {
+        for saved in [Lang::Ja, Lang::En] {
             write(&format!("language={}\n", saved.pick("ja", "en")));
             let h = app_with_system_lang(&path, system);
             assert_eq!(h.lang(), saved, "OS {system:?}・保存 {saved:?}");
@@ -1173,7 +1179,7 @@ fn the_settings_window_opens_from_the_edit_menu_and_changes_the_backups_in_both_
     use yolu_app::prefs::{self, Category, PrefsAction};
     use yolu_io::BackupKeep;
     // 退避の欄は「ファイル」の区分にある。1280 × 800 に最後の行まで収まる
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         let mut h = english_app_sized(1280.0, 800.0, lang);
         let (view, item) = (lang.pick("編集", "Edit"), lang.pick("設定…", "Settings…"));
         let (title, label, keep_all) = (
@@ -1661,13 +1667,16 @@ fn walk_states(
     h.run();
     h.run();
     visit(&mut h, "pose panel");
-    for (i, title) in lang
-        .pick(
-            ["ファイル", "編集", "レイヤー", "表示", "ヘルプ"],
-            ["File", "Edit", "Layer", "View", "Help"],
-        )
-        .into_iter()
-        .enumerate()
+    for (i, title) in [
+        "shell-file",
+        "shell-edit",
+        "shell-layer",
+        "shell-view",
+        "shell-help",
+    ]
+    .into_iter()
+    .map(|key| lang.t(key))
+    .enumerate()
     {
         let at = menu_title(&h, title).center();
         if i == 0 {
@@ -1688,7 +1697,7 @@ fn bundled_card_names_fit_in_both_languages() {
 
 fn bundled_card_names_fit_in_both_languages_gpu() {
     let truncations = Truncations::start();
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         let mut state = AppState::new(64, 64);
         state.set_lang(lang);
         let mut ready = false;
@@ -1761,23 +1770,25 @@ fn fixed_text_is_not_truncated_at_ordinary_window_sizes_in_both_languages() {
 
 fn fixed_text_is_not_truncated_at_ordinary_window_sizes_in_both_languages_gpu() {
     let truncations = Truncations::start();
+    let mut failures = Vec::new();
     // 既定のウィンドウ（main.rs の with_inner_size）と、ふつうのノート PC の大きさ
     for (width, height) in [(1600.0, 960.0), (1280.0, 800.0)] {
         for lang in Lang::ALL {
             walk_states(lang, width, height, |h, what| {
                 let clipped = clipped_texts(h);
-                assert!(
-                    clipped.is_empty(),
-                    "{lang:?} {width}x{height} {what}: {clipped:#?}"
-                );
+                if !clipped.is_empty() {
+                    failures.push(format!("{lang:?} {width}x{height} {what}: {clipped:#?}"));
+                }
                 let truncated = truncations.settled(h);
-                assert!(
-                    truncated.is_empty(),
-                    "{lang:?} {width}x{height} {what}: 「…」に詰められた文字 {truncated:#?}"
-                );
+                if !truncated.is_empty() {
+                    failures.push(format!(
+                        "{lang:?} {width}x{height} {what}: truncated {truncated:#?}"
+                    ));
+                }
             });
         }
     }
+    assert!(failures.is_empty(), "{}", failures.join("\n"));
 }
 
 /// ウィンドウの最小の大きさ（main.rs の with_min_inner_size）。ドックが狭く、日英どちらでも詰まる箱の値がある（チャンネルの名前・
@@ -1795,7 +1806,7 @@ fn fixed_text_truncation_at_the_minimum_window_size_is_exactly_the_known_set_gpu
     // 名前は行の 6 割まで広げて値の箱を残す（`look/panel.rs` の `choice`）が、それでも入らないので、名前も値も「…」で詰まる。
     const KNOWN_EN: [&str; 2] = ["Opaque", "Rendering Mode"];
     let truncations = Truncations::start();
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         let mut seen = std::collections::BTreeSet::new();
         walk_states(lang, 960.0, 640.0, |h, what| {
             // 描く文字は横に切れない（詰めたあとの文字は必ず収まる）
@@ -1814,7 +1825,7 @@ fn fixed_text_truncation_at_the_minimum_window_size_is_exactly_the_known_set_gpu
 #[test]
 fn live_link_accepting_can_be_toggled_in_both_languages() {
     use yolu_app::prefs::{Category, PrefsAction};
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         let mut h = english_app_sized(1280.0, 800.0, lang);
         h.act(Action::Prefs(PrefsAction::OpenAt(Category::LiveLink)));
         h.run();

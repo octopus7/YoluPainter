@@ -1,3 +1,5 @@
+[한국어](THIRD_PARTY.ko.md) · [日本語](THIRD_PARTY.md)
+
 # 第三者の許諾
 
 Windows MSVC・Windows GNU・Linux GNU・Linux ARM（aarch64）・macOS（universal）向けの `yolu-app`（スタンドアロン、更新依存とコマンドライン `yolu-cli` の依存を含む）と
@@ -2085,3 +2087,9 @@ AGPL の表記は検出しなかった。文字列検索だけで許諾の不存
 | zlib-rs | 0.6.8 | Zlib | ○ | ○ | ○ |
 | zmij | 1.0.23 | MIT | ○ | ○ | ○ |
 | zopfli | 0.8.3 | Apache-2.0 | ○ | ○ | ○ |
+
+## 韓国語 UI フォントの追加
+
+韓国語 UI 用に **YoluPainter Hangul**（Regular / Bold）を同梱する。Noto Sans CJK KR 2.004 の韓国語フェイスからハングルの音節と字母を抜粋し、フォントの名前を変更した派生物で、許諾は **SIL Open Font License 1.1** のまま。各ファイルに現代ハングルの音節 11,172 字を含む。
+
+原本は Noto Sans CJK の Regular / Bold TTC、韓国語フェイス（インデックス 1）。出典は https://github.com/notofonts/noto-cjk 。生成スクリプトは `tools/make-ui-font-hangul.py`。著作権と許諾全文は `crates/yolu-app/assets/fonts/OFL-Noto-CJK.txt`、加工内容は同じ場所の `THIRD-PARTY-NOTICES-Hangul.md` に記録した。ファイルと表記の SHA-256 は `tools/licenses-reviewed.json` に固定し、配布用の許諾全文束にも含める。

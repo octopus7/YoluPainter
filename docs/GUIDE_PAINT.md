@@ -1,6 +1,7 @@
+[한국어](ko/GUIDE_PAINT.md) · [日本語](GUIDE_PAINT.md) · [English](en/GUIDE_PAINT.md)
+
 # 描く
 
-[English](en/GUIDE_PAINT.md)
 
 ブラシと消しゴム、ペンの筆圧、直線・図形・定規、対称、バケツとグラデーション、色、ステンシル、テキストの使い方です。塗りつぶしレイヤーとマテリアルで塗る方法は [GUIDE_FILL.md](GUIDE_FILL.md)、パスは [GUIDE_PATHS.md](GUIDE_PATHS.md)、3D ビューへ描く方法は [GUIDE_3D.md](GUIDE_3D.md) にあります。
 

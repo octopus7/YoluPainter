@@ -937,7 +937,7 @@ fn every_category_fits_the_window_without_scrolling_at_1280_by_800_in_both_langu
             "{what}: 右の欄 {pane} に、中身 {drawn} が収まらない"
         );
     };
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         english(&mut h, lang);
         for category in Category::ALL
             .into_iter()
@@ -1151,7 +1151,7 @@ fn the_pen_category_has_the_pen_input_choice_which_reaches_the_pen_input_and_sur
 fn every_row_scrolls_into_view_in_a_low_window_in_both_languages() {
     let dir = settings_dir("small");
     let path = dir.join("YoluPainter").join("settings.conf");
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         let mut h = app_with_settings(&path, vec2(960.0, 400.0));
         // 「ペン」の区分（macOS のタブレットの筆圧と、Windows のペンの入力）も並べた形で確かめる
         h.prefs_mut().tablet_row = true;
@@ -1270,7 +1270,7 @@ fn every_row_scrolls_into_view_in_a_low_window_in_both_languages() {
 #[test]
 fn settings_is_the_last_item_of_the_edit_menu_after_a_separator_and_not_in_the_view_menu() {
     use yolu_app::ui::menu::Entry;
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         let mut s = state();
         s.set_lang(lang);
         let edit = yolu_app::shell::menu_entries(&s, 1);
@@ -1331,7 +1331,7 @@ fn ctrl_comma_opens_the_settings_and_the_shortcut_list_names_it() {
         .find(|b| b.action() == Some(Action::Prefs(PrefsAction::Open)))
         .expect("一覧に設定のキーがある");
     assert_eq!(yolu_app::shortcuts::key_label(&binding), "Ctrl+,");
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         h.set_lang(lang);
         assert_eq!(
             yolu_app::commands::for_action(&binding.action().unwrap())

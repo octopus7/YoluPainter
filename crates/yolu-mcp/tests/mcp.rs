@@ -119,10 +119,11 @@ fn the_stateless_2026_07_28_flow_discovers_lists_and_calls_without_initialize() 
     assert!(response["error"].is_object(), "{response}");
     // 資料も同じ流れで読める
     let read = mcp.result("resources/read", json!({"uri": "yolupainter://docs/guide"}));
-    assert!(read["contents"][0]["text"]
-        .as_str()
-        .unwrap()
-        .starts_with("# "));
+    assert_eq!(
+        read["contents"][0]["text"].as_str().unwrap(),
+        include_str!("../../../docs/en/GUIDE.md"),
+        "embedded documentation includes its language navigation and heading"
+    );
 }
 
 #[test]
@@ -258,6 +259,8 @@ fn resources_serve_the_bundled_docs_the_command_list_and_the_effect_kinds() {
     for expected in [
         "yolupainter://docs/guide",
         "yolupainter://docs/guide.ja",
+        "yolupainter://docs/guide.ko",
+        "yolupainter://docs/psd.ko",
         "yolupainter://docs/cli",
         "yolupainter://docs/mcp",
         "yolupainter://docs/psd",
@@ -286,6 +289,15 @@ fn resources_serve_the_bundled_docs_the_command_list_and_the_effect_kinds() {
     assert_eq!(
         ja["contents"][0]["text"].as_str().unwrap(),
         include_str!("../../../docs/GUIDE.md")
+    );
+    let ko = mcp.result(
+        "resources/read",
+        json!({"uri": "yolupainter://docs/guide.ko"}),
+    );
+    assert_eq!(ko["contents"][0]["mimeType"], "text/markdown");
+    assert_eq!(
+        ko["contents"][0]["text"].as_str().unwrap(),
+        include_str!("../../../docs/ko/GUIDE.md")
     );
     let kinds = mcp.result(
         "resources/read",

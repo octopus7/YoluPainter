@@ -1,3 +1,5 @@
+[한국어](README.ko.md) · [日本語](README.md)
+
 # Generator・ランプ・Anchor の画像評価
 
 `Settings` を `BoundGenerator::bind` で検査し、読み取り専用の入力に束縛する。`evaluate` は `Source` の指定領域から新しい RGBA8 画像を返す。

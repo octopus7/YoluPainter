@@ -80,6 +80,7 @@ pub fn material_label(
     match lang {
         yolu_app::lang::Lang::Ja => format!("{} ほか {n}", names[0]),
         yolu_app::lang::Lang::En => format!("{} and {n} more", names[0]),
+        yolu_app::lang::Lang::Ko => format!("{} 외 {n}개", names[0]),
     }
 }
 

@@ -834,7 +834,7 @@ const HAND_WRITTEN_MENU_KEYS: [(usize, &str, &str, &str); 53] = [
 #[cfg(not(target_os = "macos"))]
 #[test]
 fn the_menu_keys_equal_the_hand_written_ones_the_menus_had_before() {
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         // 0: レイヤーを 1 つ選んでいる、1: 選択範囲がある、2: グループを選んでいる
         for state in 0..3 {
             let mut app = AppState::new_in(32, 32, lang);

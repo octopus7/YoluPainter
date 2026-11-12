@@ -3,6 +3,8 @@ name: yolupainter
 description: Work on the project open in the YoluPainter texture painting app through its MCP tools - read texture sets and layers, add and edit layers, masks, filters and generators, look at channel previews, export textures and save. Use when the user asks to inspect or change their YoluPainter project.
 ---
 
+[한국어](SKILL.ko.md) · [English](SKILL.md)
+
 # YoluPainter
 
 The `yolupainter` tools talk to the YoluPainter app running on this PC (`http://127.0.0.1:17347/mcp`). They act on the project the app has open, and the user sees every change in the app.

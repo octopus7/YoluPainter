@@ -23,6 +23,7 @@ mod frame_pacing;
 mod ftl_keys;
 mod guide_keys;
 mod island_variation;
+mod korean_localization;
 mod layer_sets;
 mod liltoon_io;
 mod livelink_files;

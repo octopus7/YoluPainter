@@ -348,6 +348,32 @@ mod tests {
     use super::*;
 
     #[test]
+    fn imported_original_replaces_the_starter_white_fill_in_every_language() {
+        for lang in Lang::ALL {
+            let (mut doc, _) = crate::state::starter_document_in(4, 4, lang);
+            let imported = add_bottom_layer(&mut doc, [18, 32, 64, 255].repeat(16), lang).unwrap();
+            assert_eq!(
+                doc.layers().len(),
+                2,
+                "{lang:?}: original plus empty paint layer"
+            );
+            assert_eq!(doc.layers()[0].id(), imported);
+            assert!(
+                doc.layers()
+                    .iter()
+                    .all(|layer| layer.kind() != yolu_core::LayerKind::Fill),
+                "{lang:?}: starter white must not cover the imported texture"
+            );
+            assert!(!doc.can_undo());
+            assert_eq!(
+                doc.composite_pixel(Channel::Color, 0, 0).unwrap(),
+                yolu_core::Rgba8::new(18, 32, 64, 255),
+                "{lang:?}"
+            );
+        }
+    }
+
+    #[test]
     fn the_mark_is_shown_only_for_a_value_that_is_not_the_original_files() {
         let mark = |converted, resized_from| OriginalMark {
             doc: 1,

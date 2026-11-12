@@ -1,3 +1,5 @@
+[한국어](THIRD-PARTY-NOTICES.ko.md) · [日本語](THIRD-PARTY-NOTICES.md)
+
 # Krita の筆先の第三者表記
 
 `crates/yolu-brush-sets/data/krita4/brushes/` の筆先 76 個（PNG・GBR・GIH）は、Krita の

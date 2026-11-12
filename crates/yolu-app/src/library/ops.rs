@@ -90,6 +90,8 @@ fn put_note(lang: Lang, rel: &str, existed: bool) -> String {
         (Lang::Ja, true) => format!("{name}はすでにライブラリにあります。"),
         (Lang::En, false) => format!("Added {name} to the library."),
         (Lang::En, true) => format!("{name} is already in the library."),
+        (Lang::Ko, false) => format!("라이브러리에 {name} 항목을 추가했습니다."),
+        (Lang::Ko, true) => format!("라이브러리에 {name} 항목이 이미 있습니다."),
     }
 }
 
@@ -422,6 +424,7 @@ impl AppState {
             many => match lang {
                 Lang::Ja => format!("{} 件", many.len()),
                 Lang::En => format!("{} files", many.len()),
+                Lang::Ko => format!("파일 {}개", many.len()),
             },
         };
         self.library_spawn_write(name, Attempt::LibraryAdd, move |cancel, lang| {

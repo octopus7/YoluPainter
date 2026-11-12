@@ -621,7 +621,7 @@ Target:
   (no --file)      the running YoluPainter (Settings: Accept external commands)
   --port <number>  the port set in the app (default 17347)
 Options:
-  --pretty  --lang ja|en  --timeout <seconds>  --out <png>  --cwd <folder>  --version  --help
+  --pretty  --lang ja|en|ko  --timeout <seconds>  --out <png>  --cwd <folder>  --version  --help
 
 The reply is JSON on stdout. On failure stdout has {\"error\": ...}, stderr one line, and the exit code is
 1 refused, 2 bad arguments, 3 the app cannot be reached, 4 confirmation needed (--confirm).
@@ -647,7 +647,7 @@ JSON のオブジェクト 1 つ（'{\"layer\":\"Base\"}'・@file.json・- は�
   （--file なし）  起動中の YoluPainter（設定「外からの操作を受ける」を入れておく）
   --port <番号>    アプリの設定の番号（既定は 17347）
 オプション:
-  --pretty  --lang ja|en  --timeout <秒>  --out <png>  --cwd <フォルダ>  --version  --help
+  --pretty  --lang ja|en|ko  --timeout <秒>  --out <png>  --cwd <フォルダ>  --version  --help
 
 返事は標準出力の JSON です。失敗は標準出力に {\"error\": ...}、標準エラーに 1 行、終了コードは
 1 命令が断った・2 引数の誤り・3 起動中のアプリにつなげない・4 確認が要る（--confirm）です。

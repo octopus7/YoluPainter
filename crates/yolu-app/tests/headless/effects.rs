@@ -324,7 +324,7 @@ fn a_slider_drag_is_one_undo_step_and_menu_choices_are_separate_steps() {
 
 #[test]
 fn locks_refuse_effect_edits_with_a_reason_in_both_languages_and_change_nothing() {
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         let mut s = AppState::new(64, 64);
         s.set_lang(lang);
         let layer = s.selected_layer().unwrap();
@@ -2174,7 +2174,7 @@ fn decoded_images_share_one_budget_and_a_refusal_is_tried_again_only_when_it_cou
 
 #[test]
 fn an_image_that_cannot_be_decoded_says_why_in_the_read_only_reason_and_opens_once_it_can() {
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         let dir = temp_dir(&format!("undecodable-{}", lang.pick("ja", "en")));
         let path = dir.join("two.ylp");
         let mut s = AppState::new(64, 64);

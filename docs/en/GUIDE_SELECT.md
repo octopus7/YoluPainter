@@ -1,6 +1,7 @@
+[한국어](../ko/GUIDE_SELECT.md) · [日本語](../GUIDE_SELECT.md) · [English](GUIDE_SELECT.md)
+
 # Selection and Transform
 
-[日本語](../GUIDE_SELECT.md)
 
 This page covers making and using selections, remembering them, moving and transforming layers, and copy and paste. Selections can be made on the 2D Canvas and in the 3D View. The current selection is saved in the `.ylp` for each texture set.
 

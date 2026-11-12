@@ -26,6 +26,21 @@ impl Lang {
     }
 
     pub fn store_error(self, error: &StoreError) -> String {
+        if self == Self::Ko {
+            return match error {
+                StoreError::Io(e) => self.file_error(e),
+                StoreError::LowSpace(_) => self.t("recovery-low-disk-space").into(),
+                StoreError::NoGeneration => "복구 세대가 없습니다".into(),
+                StoreError::AlreadyExists => "폴더에 이미 복구 세대가 있습니다".into(),
+                StoreError::Changed(_) => "외부에서 복구 폴더가 변경되었습니다".into(),
+                StoreError::Busy => "다른 작업이 복구 폴더에 쓰고 있습니다".into(),
+                StoreError::Corrupt(_) => "복구 세대가 손상되었습니다".into(),
+                StoreError::Budget(why) => self
+                    .budget_reason(why)
+                    .unwrap_or_else(|| "크기 제한을 초과했습니다".into()),
+                StoreError::InvalidArgument(_) => "잘못된 설정입니다".into(),
+            };
+        }
         match error {
             StoreError::Io(e) => self.file_error(e),
             StoreError::LowSpace(_) => self.t("recovery-low-disk-space").into(),
@@ -286,7 +301,7 @@ mod tests {
         assert!(Lang::Ja
             .recovery_usage_tip(&other, 1, None)
             .contains("ほかのウィンドウ  5 MB"));
-        for lang in Lang::ALL {
+        for lang in [Lang::Ja, Lang::En] {
             let tip = lang.recovery_usage_tip(&other, 2 << 30, Some(1 << 30));
             assert_eq!(has_japanese(&tip), lang == Lang::Ja, "{tip}");
         }
@@ -303,7 +318,7 @@ mod tests {
             needed: 9,
             reserve: 7,
         }));
-        for lang in Lang::ALL {
+        for lang in [Lang::Ja, Lang::En] {
             let text = lang.recovery_failed(&low);
             assert!(
                 !text.chars().any(|c| c.is_ascii_digit()),

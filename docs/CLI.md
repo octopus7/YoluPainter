@@ -1,6 +1,7 @@
+[한국어](ko/CLI.md) · [日本語](CLI.md) · [English](en/CLI.md)
+
 # コマンドライン（yolupainter-cli）
 
-[English](en/CLI.md)
 
 `yolupainter-cli` は、YoluPainter の `.ylp` を、画面を出さずに、またはいま起動しているアプリに対して、コマンドから操作する小さなコンソールのプログラムです。
 スクリプトや AI から、レイヤー・マスク・効果の読み書き、見本の画像、書き出し、保存を呼べます。AI のアシスタントは、起動中のアプリへ MCP で直接つなぎます

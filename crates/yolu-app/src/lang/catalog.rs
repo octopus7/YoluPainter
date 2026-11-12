@@ -48,6 +48,7 @@ fn sources(lang: Lang) -> &'static [(&'static str, &'static str)] {
     match lang {
         Lang::Ja => embedded::JA,
         Lang::En => embedded::EN,
+        Lang::Ko => embedded::KO,
     }
 }
 
@@ -55,6 +56,7 @@ fn locale(lang: Lang) -> unic_langid::LanguageIdentifier {
     let tag = match lang {
         Lang::Ja => "ja",
         Lang::En => "en",
+        Lang::Ko => "ko",
     };
     tag.parse().unwrap_or_default()
 }
@@ -99,9 +101,11 @@ fn format(
 fn catalog(lang: Lang) -> &'static Catalog {
     static JA: OnceLock<Catalog> = OnceLock::new();
     static EN: OnceLock<Catalog> = OnceLock::new();
+    static KO: OnceLock<Catalog> = OnceLock::new();
     match lang {
         Lang::Ja => JA.get_or_init(|| build(Lang::Ja)),
         Lang::En => EN.get_or_init(|| build(Lang::En)),
+        Lang::Ko => KO.get_or_init(|| build(Lang::Ko)),
     }
 }
 
@@ -150,5 +154,6 @@ pub(super) fn reason(lang: Lang, reason: yolu_core::Reason) -> &'static str {
     lookup(lang, &key).unwrap_or(match lang {
         Lang::Ja => reason.ja(),
         Lang::En => "Unsupported value or operation",
+        Lang::Ko => "지원하지 않는 값 또는 작업입니다",
     })
 }

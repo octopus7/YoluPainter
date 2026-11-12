@@ -1,6 +1,7 @@
+[한국어](ko/GUIDE_PATHS.md) · [日本語](GUIDE_PATHS.md) · [English](en/GUIDE_PATHS.md)
+
 # パス
 
-[English](en/GUIDE_PATHS.md)
 
 パスのツール（`P`）は、点を順に通る編集できる曲線を、2D のキャンバスとモデルの面の上に引きます。点や設定を直すたびに、曲線から画素を描き直します。キー操作は [GUIDE_KEYS.md](GUIDE_KEYS.md) にあります。
 

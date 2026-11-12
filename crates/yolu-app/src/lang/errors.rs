@@ -1,4 +1,6 @@
 //! core の型と io の分類から、画面用の短い理由を作る。
+mod korean;
+
 use super::Lang;
 use crate::stencil::StencilError;
 use crate::view3d::model::ViewError;
@@ -74,6 +76,8 @@ impl Lang {
                     (Lang::Ja, false) => format!("親グループの{locks}がロックされています"),
                     (Lang::En, true) => format!("The layer has {locks} locked"),
                     (Lang::En, false) => format!("A parent group has {locks} locked"),
+                    (Lang::Ko, true) => format!("레이어의 {locks} 속성이 잠겨 있습니다"),
+                    (Lang::Ko, false) => format!("상위 그룹의 {locks} 속성이 잠겨 있습니다"),
                 }
             }
             CoreError::Cancelled => self.t("lang-cancelled").into(),
@@ -126,6 +130,15 @@ impl Lang {
             }
             CoreError::Unsupported(what) => self.with_reason(self.reason(*what), ""),
             _ if self == Self::Ja => error.to_string(),
+            CoreError::Clipboard(reason) if self == Self::Ko => {
+                korean::clipboard_refusal(*reason).into()
+            }
+            CoreError::BatchActive if self == Self::Ko => {
+                "일괄 편집 중에는 이 작업을 할 수 없습니다".into()
+            }
+            CoreError::TileUnreadable if self == Self::Ko => {
+                "디스크 캐시에서 타일을 다시 읽을 수 없습니다".into()
+            }
             CoreError::Clipboard(reason) => clipboard_refusal(*reason).into(),
             CoreError::BatchActive => "Not allowed inside a batch of edits".into(),
             CoreError::TileUnreadable => "Cannot read a tile back from the disk cache".into(),
@@ -284,6 +297,9 @@ impl Lang {
     /// 開いたときの知らせの短い文（日本語は診断をそのまま、英語は種類ごとに）。
     pub fn project_note(self, note: &yolu_io::Note) -> String {
         use yolu_io::Note;
+        if self == Self::Ko {
+            return korean::project_note(note);
+        }
         if self == Self::Ja {
             return note.to_string();
         }
@@ -314,6 +330,9 @@ impl Lang {
     /// 効果が入力のまま通している理由（日本語は core の文、英語は種類ごとの短い文。core が理由の文だけを持つ設定の不備は一般の文）。
     pub fn inactive_reason(self, reason: &InactiveReason) -> String {
         use generator::Inactive as I;
+        if self == Self::Ko {
+            return korean::inactive_reason(reason);
+        }
         if self == Self::Ja {
             return reason.to_string();
         }
@@ -389,12 +408,35 @@ impl Lang {
                 };
                 format!("{name} {what} has no effect")
             }
+            (Lang::Ko, target) => {
+                let what = match target {
+                    InactiveTarget::Generator { mask, kind } => format!(
+                        "{}{}",
+                        crate::fx::names::generator_name(self, kind),
+                        if mask { " (마스크)" } else { "" }
+                    ),
+                    InactiveTarget::FillGradient(c) => format!("그라데이션 ({c:?})"),
+                    InactiveTarget::Decal => "데칼".into(),
+                    InactiveTarget::FillImage(c) => format!("이미지 ({c:?})"),
+                    InactiveTarget::FillPoints(c) => format!("포인트 그라데이션 ({c:?})"),
+                };
+                format!("{name}의 {what} 효과가 적용되지 않습니다")
+            }
         };
         self.with_reason(what, self.inactive_reason(&effect.reason))
     }
 
     /// 位置のマップが使えなくて UV の空間で評価しているノイズ・グランジの段 1 件の 1 行（日本語は core の文、英語はレイヤーの名前・種類・理由）。
     pub fn fallback_effect(self, effect: &FallbackEffect) -> String {
+        if self == Self::Ko {
+            return format!(
+                "\"{}\" {}{}: UV 공간에서 계산합니다. {}",
+                effect.layer_name,
+                crate::fx::names::generator_name(self, effect.kind),
+                if effect.mask { " (마스크)" } else { "" },
+                self.inactive_reason(&effect.reason)
+            );
+        }
         if self == Self::Ja {
             return effect.to_string();
         }
@@ -426,6 +468,10 @@ impl Lang {
                 "{} inactive effect(s) in \"{set}\" are not in the composite PNG",
                 effects.len()
             ),
+            Self::Ko => format!(
+                "\"{set}\"의 비활성 효과 {}개가 합성 PNG에 포함되지 않습니다",
+                effects.len()
+            ),
         };
         format!(" {}", self.with_reason(what, first))
     }
@@ -452,6 +498,13 @@ impl Lang {
                     text += &format!(" and {more} more");
                 }
                 format!("Unsupported project features ({text})")
+            }
+            Self::Ko => {
+                let mut text = shown.join(", ");
+                if more > 0 {
+                    text += &format!(" 외 {more}개");
+                }
+                format!("편집을 지원하지 않는 프로젝트 기능 ({text})")
             }
         }
     }
@@ -608,6 +661,9 @@ impl Lang {
         crate::crash::problem(self.view_error_text(error))
     }
     fn view_error_text(self, error: &ViewError) -> String {
+        if self == Self::Ko {
+            return korean::view_error(error);
+        }
         // モデルの読み込みの誤りは、日本語も「何が（なぜ）」の 1 文に組み直した形で
         if let ViewError::Model(e) = error {
             return self.model_error_text(e);
@@ -646,6 +702,9 @@ impl Lang {
         crate::crash::problem(self.rig_error_text(error))
     }
     fn rig_error_text(self, error: &RigError) -> String {
+        if self == Self::Ko {
+            return korean::rig_error(error);
+        }
         if self == Self::Ja {
             return error.to_string();
         }
@@ -688,6 +747,9 @@ impl Lang {
         }
     }
     fn model_error_text(self, error: &ModelError) -> String {
+        if self == Self::Ko {
+            return korean::model_error(error);
+        }
         match error {
             // 「〜できません: 理由」のコロンでつないだ形にしない
             ModelError::Io(e) => self.with_reason(self.t("lang-cannot-read-the-file"), e),
@@ -800,6 +862,20 @@ pub fn library_io_error(lang: Lang, e: &yolu_io::Error) -> String {
 
 /// 取り込めない理由の文（言語ごと）。
 pub fn brush_import_error(lang: Lang, error: &BrushImportError) -> String {
+    if lang == Lang::Ko {
+        use yolu_io::brushes::UnsupportedFile;
+        return match error {
+            BrushImportError::Io(e) => lang.file_error(e),
+            BrushImportError::FileTooLarge { .. } => "파일이 너무 큽니다".into(),
+            BrushImportError::Unsupported(UnsupportedFile::KritaPreset) => "Krita 브러시 프리셋(.kpp)은 지원하지 않습니다".into(),
+            BrushImportError::Unsupported(UnsupportedFile::Extension(ext)) => format!("지원하지 않는 브러시 파일 형식 '{ext}'입니다 (지원 형식: abr, pat, gbr, gih, vbr, png, sut)"),
+            BrushImportError::Core(e) => lang.with_reason("브러시 설정이 범위를 벗어났습니다", lang.core_error(e)),
+            // Preserve the decoder's detailed technical diagnosis, including
+            // versions and limits, when it has no Korean equivalent yet.
+            BrushImportError::Fault(fault) => lang.with_reason("브러시 파일을 가져올 수 없습니다", fault.english()),
+            BrushImportError::NoUsablePattern(_) => lang.with_reason("파일에 사용할 수 있는 패턴이 없습니다", error.english()),
+        };
+    }
     match error {
         BrushImportError::Io(e) => lang.file_error(e),
         other => lang.pick(other.to_string(), other.english()),
@@ -1269,7 +1345,7 @@ mod tests {
             Lang::En.core_error(&CoreError::LayerNotFound),
             "Layer not found"
         );
-        for lang in Lang::ALL {
+        for lang in [Lang::Ja, Lang::En] {
             assert_eq!(
                 lang.core_error(&CoreError::StrokeActive),
                 super::super::refusals::during_stroke(lang)
@@ -1589,7 +1665,7 @@ mod tests {
             Error::SaveConflict("ロックのファイルがシンボリックリンクです".into()),
             Error::SaveConflict("保存先が外部で消されています。上書きしません".into()),
         ];
-        for lang in Lang::ALL {
+        for lang in [Lang::Ja, Lang::En] {
             let texts: Vec<String> = errors.iter().map(|e| lang.io_error(e)).collect();
             for (i, a) in texts.iter().enumerate() {
                 assert!(!a.is_empty());
@@ -1719,7 +1795,7 @@ mod tests {
             ErrorKind::FileTooLarge,
             ErrorKind::Other,
         ];
-        for lang in Lang::ALL {
+        for lang in [Lang::Ja, Lang::En] {
             let texts: Vec<String> = kinds
                 .iter()
                 .map(|k| lang.file_error(&Error::from(*k)))

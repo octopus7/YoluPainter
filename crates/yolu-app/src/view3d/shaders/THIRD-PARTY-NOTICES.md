@@ -1,3 +1,5 @@
+[한국어](THIRD-PARTY-NOTICES.ko.md) · [日本語](THIRD-PARTY-NOTICES.md)
+
 # 3D ビューの lilToon の再現の第三者表記
 
 `liltoon/` の部品（`*.wgsl`。つなぎ方は `crates/yolu-app/src/view3d/liltoon_wgsl.rs`）と、`crates/yolu-app/src/look/liltoon.rs` のプロパティの既定値・名前は、lilToon 2.3.4 の

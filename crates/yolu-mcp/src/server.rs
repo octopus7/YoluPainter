@@ -5,7 +5,7 @@
 //!   resource_link（`yolupainter://preview/<番号>.png`。直近の数枚を覚えていて、`resources/read` で読める）の両方で返す
 //!   （画像を表示できないクライアントでも、リンクから取れるように）。
 //! - 失敗は `isError: true` の text（誤りの JSON。`code`・日英の `message`・`data`）。壊す操作に `confirm: true` が無ければ `confirm_required`。
-//! - 資料: `yolupainter://docs/<名前>`（実行ファイルに埋め込んだ、入れてある版の文書。`.ja`・`.en` で言語を指せる）、
+//! - 資料: `yolupainter://docs/<名前>`（実行ファイルに埋め込んだ、入れてある版の文書。`.ja`・`.en`・`.ko` で言語を指せる）、
 //!   `yolupainter://ops/commands`（命令の一覧と schema）、`yolupainter://ops/effect-kinds`（効果の種類と値の範囲）。
 //! - 版: rmcp が 2025-11-25 以前の `initialize` と、2026-07-28 の `server/discover`・要求ごとの `_meta` の両方を受ける。
 //! - 任意のコードを実行するツールは無い。ファイルは、書き出し・保存の命令が指す道だけを扱う（道の決まりは yolu-ops の `PathPolicy` と相手のホスト）。
@@ -178,6 +178,18 @@ fn docs_resources() -> Vec<Resource> {
                     .with_size(ja.len() as u64),
                 );
             }
+        }
+        if let Some(ko) = doc.ko {
+            out.push(
+                Resource::new(
+                    format!("{}{}.ko", docs::URI_PREFIX, doc.name),
+                    format!("{}.ko", doc.name),
+                )
+                .with_title(docs::title_of(ko))
+                .with_description("YoluPainter user documentation (Korean)")
+                .with_mime_type("text/markdown")
+                .with_size(ko.len() as u64),
+            );
         }
     }
     out

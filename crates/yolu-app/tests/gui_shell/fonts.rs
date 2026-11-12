@@ -298,3 +298,27 @@ fn snapshot_thin_glyphs_in_the_sizes_of_the_labels() {
     h.run();
     h.snapshot("fonts_thin_glyphs");
 }
+
+/// Korean uses the bundled Hangul fallback in both weights and at all UI scales.
+#[test]
+fn korean_text_sits_in_the_vertical_middle_of_the_row() {
+    let texts = ["한국어", "브러시", "레이어", "선택"];
+    let mut failures = Vec::new();
+    for ppp in [1.0, 1.5, 2.0] {
+        for size in [10.0, 11.0, 12.0, 14.0] {
+            for (weight, style) in [("regular", regular(size)), ("bold", bold(size))] {
+                let offsets = center_offsets(&texts, style, ppp);
+                for (text, offset) in texts.iter().zip(offsets) {
+                    if offset.abs() > 1.0 {
+                        failures.push(format!("{text} ({weight}, {size} pt, {ppp}×): {offset} pt"));
+                    }
+                }
+            }
+        }
+    }
+    assert!(
+        failures.is_empty(),
+        "Hangul vertical alignment:\n{}",
+        failures.join("\n")
+    );
+}

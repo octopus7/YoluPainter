@@ -1,3 +1,5 @@
+[한국어](ko/RELEASING.md) · [日本語](RELEASING.md)
+
 # 配布の手順
 
 Windows x86_64 MSVC の zip とインストーラー（NSIS の setup.exe）と、Linux x86_64 の tar.gz（試用。`release.yml` の入力 `linux` は入が既定）と、Linux ARM（aarch64）の tar.gz（試作。実機では確かめていません。入力 `linux_arm` は入が既定。ビルドが落ちても配布は止まらず、載せません）を出します。macOS は試作として、署名なし（ad-hoc の署名だけ）の `YoluPainter.app` の zip を出します

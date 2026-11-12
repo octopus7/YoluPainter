@@ -1,0 +1,36 @@
+# 변형 화면 텍스트
+
+transform-liquify-input-limit-reached = 픽셀 유동화 입력 한도에 도달했습니다
+transform-no-layer-with-pixels-to = 이동할 픽셀이 있는 레이어가 없습니다.
+transform-no-pixels-to-move-inside = 선택 영역 안에 이동할 픽셀이 없습니다.
+transform-no-pixels-to-move = 이동할 픽셀이 없습니다.
+transform-that-would-collapse-the-layer = 레이어가 찌그러지므로 변형하지 않습니다.
+transform-transform-cancelled = 변형이 취소되었습니다.
+transform-bilinear = 이중 선형
+transform-nearest = 최근접
+transform-flip-horizontal = 좌우 반전
+transform-flip-vertical = 상하 반전
+transform-rotate-90-counter-clockwise = 시계 반대 방향으로 90° 회전
+transform-rotate-90-clockwise = 시계 방향으로 90° 회전
+transform-resampling = 리샘플링
+transform-bilinear-smooths-nearest-keeps-hard-tip = 이중 선형은 부드럽게 처리하고 최근접은 선명한 픽셀을 유지합니다. 정수 픽셀 단위 이동, 90° 회전 및 반전은 어느 방식이든 픽셀을 정확히 복사합니다
+transform-mesh = 메시
+transform-columns = 열
+transform-rows = 행
+transform-numeric = 수치 입력
+transform-horizontal-offset-is-right-tip = 가로 오프셋 (+는 오른쪽)
+transform-vertical-offset-is-up-tip = 세로 오프셋 (+는 위쪽)
+transform-width = 너비
+transform-horizontal-scale-a-negative-value-tip = 가로 배율 (음수이면 반전)
+transform-height = 높이
+transform-vertical-scale-a-negative-value-tip = 세로 배율 (음수이면 반전)
+transform-angle = 각도
+transform-counter-clockwise-about-the-centre-tip = 이동 대상의 중심을 기준으로 시계 반대 방향
+transform-bilinear-smooths-nearest-keeps-hard-2-tip = 이중 선형은 부드럽게 처리하고 최근접은 선명한 픽셀을 유지합니다
+transform-apply = 적용
+transform-transform-by-these-numbers-one-tip = 이 수치로 변형합니다 (한 번에 실행 취소 가능)
+transform-reset = 초기화
+transform-back-to-no-change-tip = 변경하지 않은 상태로 되돌리기
+transform-diameter = 지름
+transform-strength = 강도
+transform-restore-how-strongly-pixels-go-tip = 복원: 픽셀을 이번 픽셀 유동화 작업의 시작 상태로 되돌리는 강도

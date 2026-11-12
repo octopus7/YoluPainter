@@ -1,6 +1,7 @@
+[한국어](../ko/GUIDE_FILL.md) · [日本語](../GUIDE_FILL.md) · [English](GUIDE_FILL.md)
+
 # Fill Layers and Effects
 
-[日本語](../GUIDE_FILL.md)
 
 This page covers fill layers (layers that paint surfaces with values, images or gradients), effects that sit on a layer's pixels or mask, assets and the library for reusing materials, and recording and playing back actions.
 

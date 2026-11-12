@@ -22,7 +22,7 @@ pub(crate) struct Message {
     pub(crate) vars: BTreeSet<String>,
 }
 
-pub(crate) const LANGS: [&str; 2] = ["ja", "en"];
+pub(crate) const LANGS: [&str; 3] = ["ja", "en", "ko"];
 
 fn locales() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("locales")
@@ -229,40 +229,32 @@ fn every_ftl_file_reads_without_errors() {
 }
 
 #[test]
-fn japanese_and_english_have_the_same_keys_and_arguments() {
+fn all_languages_have_the_same_keys_and_arguments() {
     let names = |lang| -> Vec<String> {
         ftl_files(lang)
             .iter()
             .map(|p| p.file_name().unwrap().to_string_lossy().into_owned())
             .collect()
     };
-    assert_eq!(names("ja"), names("en"), "日英の .ftl のファイルの組");
-    let (ja, _) = language("ja");
-    let (en, _) = language("en");
-    let only = |a: &BTreeMap<String, Message>, b: &BTreeMap<String, Message>| -> Vec<String> {
-        a.keys().filter(|k| !b.contains_key(*k)).cloned().collect()
-    };
-    assert!(
-        only(&ja, &en).is_empty(),
-        "日本語だけのキー: {:?}",
-        only(&ja, &en)
-    );
-    assert!(
-        only(&en, &ja).is_empty(),
-        "英語だけのキー: {:?}",
-        only(&en, &ja)
-    );
-    let mut found = Vec::new();
-    for (key, j) in &ja {
-        let e = &en[key];
-        if j.file.rsplit('/').next() != e.file.rsplit('/').next() {
-            found.push(format!("{key}: ファイルが違う（{} と {}）", j.file, e.file));
-        }
-        if j.vars != e.vars {
-            found.push(format!("{key}: 引数が違う（{:?} と {:?}）", j.vars, e.vars));
+    let (reference, _) = language("en");
+    for lang in LANGS {
+        assert_eq!(names(lang), names("en"), "{lang}: catalog files");
+        let (table, errors) = language(lang);
+        assert!(errors.is_empty(), "{lang}: {errors:?}");
+        assert_eq!(
+            table.keys().collect::<Vec<_>>(),
+            reference.keys().collect::<Vec<_>>(),
+            "{lang}: keys"
+        );
+        for (key, message) in &table {
+            assert_eq!(message.vars, reference[key].vars, "{lang}: {key} arguments");
+            assert_eq!(
+                message.file.rsplit('/').next(),
+                reference[key].file.rsplit('/').next(),
+                "{lang}: {key} module"
+            );
         }
     }
-    assert!(found.is_empty(), "{}", found.join("\n"));
 }
 
 /// 本番のソースの `.f("キー", &[("名前", …), …])` が渡す引数の名前（キーの所から読む。入れ子の呼び出しの引数は数えない）。
@@ -313,9 +305,10 @@ fn passed_arguments(text: &str, line: usize, key: &str) -> Option<BTreeSet<Strin
 }
 
 #[test]
-fn the_keys_the_code_uses_are_in_both_languages_and_every_key_is_used() {
+fn the_keys_the_code_uses_are_in_all_languages_and_every_key_is_used() {
     let (ja, _) = language("ja");
     let (en, _) = language("en");
+    let (ko, _) = language("ko");
     let sources: BTreeMap<String, String> = crate::no_instruction_text::production_sources()
         .into_iter()
         .collect();
@@ -326,7 +319,7 @@ fn the_keys_the_code_uses_are_in_both_languages_and_every_key_is_used() {
     let mut used = BTreeSet::new();
     for (file, line, key) in &uses {
         used.insert(key.clone());
-        let (Some(j), Some(_)) = (ja.get(key), en.get(key)) else {
+        let (Some(j), Some(_), Some(_)) = (ja.get(key), en.get(key), ko.get(key)) else {
             found.push(format!("{file}:{line}: キー {key} が日英の .ftl に無い"));
             continue;
         };
@@ -429,7 +422,7 @@ fn the_japanese_reasons_are_the_core_texts() {
 #[test]
 fn the_embedded_texts_are_the_files() {
     use yolu_app::lang::{Arg, Lang};
-    for (lang, name) in [(Lang::Ja, "ja"), (Lang::En, "en")] {
+    for (lang, name) in [(Lang::Ja, "ja"), (Lang::En, "en"), (Lang::Ko, "ko")] {
         let (table, _) = language(name);
         for (key, message) in table {
             let key: &'static str = Box::leak(key.into_boxed_str());

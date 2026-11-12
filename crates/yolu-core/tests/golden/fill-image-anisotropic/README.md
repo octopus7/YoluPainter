@@ -1,3 +1,5 @@
+[한국어](README.ko.md) · [日本語](README.md)
+
 # 塗りつぶし投影の異方性の正解（Rust）
 
 `../fill-image/` と同じ入力（`tests/support/fill_cases.rs` の 6 つの投影 × 8 つの入力と、デカールの値）を、画像とデカールの形の両方を異方性で読んで（`FillInput::anisotropic`・`shape_anisotropic` を立てて）描いた結果です。名前と形式（37×29、straight RGBA8、左下からの行優先）は `../fill-image/` と同じです。

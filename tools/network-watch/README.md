@@ -1,3 +1,5 @@
+[한국어](README.ko.md) · [日本語](README.md)
+
 # network-watch の見本
 
 - `arm.fbx`: Live Link の頼みで開く 3D のモデル（腕のボーンとメッシュ。FBX 7.4 の ASCII、約 8 KB）。`crates/yolu-model/tests/common/fbx_ascii.rs` の

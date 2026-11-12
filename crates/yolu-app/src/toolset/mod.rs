@@ -744,12 +744,12 @@ impl ToolSet {
     pub(crate) fn rename_slot(&mut self, id: SlotId, name: Option<&str>) -> Result<bool, Refusal> {
         self.check_unlocked()?;
         let slot = self.slot_mut(id).ok_or(Refusal::Missing)?;
-        let builtin = slot.tool.name_in(Lang::Ja);
-        let builtin_en = slot.tool.name_in(Lang::En);
         // ツールの表の名前と同じ名前は、名前を持たない（言語を替えたら、その言語の名前になる）
-        let name = name
-            .and_then(clean_name)
-            .filter(|n| n != builtin && n != builtin_en);
+        let name = name.and_then(clean_name).filter(|n| {
+            Lang::ALL
+                .into_iter()
+                .all(|lang| n != slot.tool.name_in(lang))
+        });
         if slot.name == name {
             return Ok(false);
         }
@@ -843,7 +843,7 @@ impl ToolSet {
         // 組み込みのグループの名前と同じなら、名前を持たない（言語で替わる）
         let same_builtin = group
             .builtin
-            .is_some_and(|g| g.name(Lang::Ja) == name || g.name(Lang::En) == name);
+            .is_some_and(|g| Lang::ALL.into_iter().any(|lang| g.name(lang) == name));
         let next = (!same_builtin).then_some(name);
         if group.name == next {
             return Ok(false);
@@ -1203,6 +1203,9 @@ mod tests {
         assert!(set.rename_slot(brush, Some("Brush")).unwrap());
         assert_eq!(set.slot(brush).unwrap().name, None);
         assert_eq!(set.slot(brush).unwrap().name_in(Lang::Ja), "ブラシ");
+        assert!(!set.rename_slot(brush, Some("브러시")).unwrap());
+        assert_eq!(set.slot(brush).unwrap().name, None);
+        assert_eq!(set.slot(brush).unwrap().name_in(Lang::En), "Brush");
         // アイコン
         assert!(set.set_icon(ink, Some("stylus")).unwrap());
         assert_eq!(set.slot(ink).unwrap().icon().normal, "stylus");
@@ -1259,6 +1262,8 @@ mod tests {
         assert!(set.rename_group(pen, "線画").unwrap());
         assert_eq!(set.group(pen).unwrap().1.name_in(Lang::En), "線画");
         assert!(set.rename_group(pen, "ペン").unwrap());
+        assert_eq!(set.group(pen).unwrap().1.name_in(Lang::En), "Pen");
+        assert!(!set.rename_group(pen, "펜").unwrap());
         assert_eq!(set.group(pen).unwrap().1.name_in(Lang::En), "Pen");
         assert!(!set.rename_group(pen, "  ").unwrap(), "空の名前は変えない");
         // 別のツールへ動かす（中のブラシも一緒に。消すかどうかはツールが決める）

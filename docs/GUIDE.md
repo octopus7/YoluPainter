@@ -1,6 +1,7 @@
+[한국어](ko/GUIDE.md) · [日本語](GUIDE.md) · [English](en/GUIDE.md)
+
 # 使い方
 
-[English](en/GUIDE.md)
 
 YoluPainter は、3D モデルのテクスチャを、2D のキャンバスと 3D ビューの両方に描いて作るアプリです。レイヤー・マスク・効果・チャンネルごとの塗りを使い、作業を `.ylp` に保存して、PNG や PSD に書き出します。
 

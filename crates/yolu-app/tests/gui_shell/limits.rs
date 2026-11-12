@@ -236,7 +236,7 @@ fn ctrl_minus_and_plus_do_not_zoom_the_whole_interface() {
 
 #[test]
 fn about_names_the_product_and_the_version_and_nothing_else() {
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         let mut s = AppState::new_in(64, 64, lang);
         s.act(Action::About);
         // 正式版は製品名と版だけ。試験版（0.4.0-rc.1 のような版）には、版のあとに試験版の印が付く
@@ -247,6 +247,9 @@ fn about_names_the_product_and_the_version_and_nothing_else() {
             (false, _) => "",
             (true, Lang::Ja) => "（ベータ版）",
             (true, Lang::En) => " (beta)",
+            _ => unreachable!(
+                "This fixture has Japanese/English expectations; see korean_localization.rs"
+            ),
         };
         assert_eq!(s.message(), format!("YoluPainter {version}{mark}"));
     }

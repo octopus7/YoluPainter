@@ -1,6 +1,7 @@
+[한국어](../ko/BUILDING.md) · [日本語](../BUILDING.md) · [English](BUILDING.md)
+
 # Building from source
 
-[日本語](../BUILDING.md)
 
 You need the stable Rust toolchain and a C/C++ build environment. See the [Rust installation instructions](https://doc.rust-lang.org/book/ch01-01-installation.html). Obtain and extract the source, then run the following commands in the folder containing `Cargo.toml`. The first build needs an internet connection to download dependencies.
 

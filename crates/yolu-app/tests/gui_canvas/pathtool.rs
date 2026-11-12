@@ -2066,7 +2066,7 @@ fn headless_the_tool_is_in_the_strip_with_a_key_and_both_languages() {
     assert_eq!(Tool::Path.id(), "path");
     assert_ne!(Tool::Path.name_in(Lang::Ja), Tool::Path.name_in(Lang::En));
     let mut s = AppState::new(64, 64);
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         s.set_lang(lang);
         for refusal in [
             yolu_app::pathtool::edit::Refusal::TooMany,
@@ -3996,7 +3996,7 @@ fn no_instruction_text(h: &mut Harness<'static, YoluApp>, lang: Lang, what: &str
 fn the_path_tool_text_fits_without_truncation_and_stays_in_the_language() {
     yolu_app::ui::widgets::record_truncations(true);
     for (width, height) in [(1280.0, 800.0), (960.0, 640.0)] {
-        for lang in Lang::ALL {
+        for lang in [Lang::Ja, Lang::En] {
             let mut h = sized_app(width, height, lang);
             key(&h, Key::P, Modifiers::NONE);
             h.run();
@@ -4121,6 +4121,9 @@ fn three_paths(h: &mut Harness<'_, YoluApp>) {
     let name = match h.lang() {
         Lang::Ja => "縁取り",
         Lang::En => "Outline",
+        _ => unreachable!(
+            "This fixture has Japanese/English expectations; see korean_localization.rs"
+        ),
     };
     act(h, PathAction::List(ListOp::Rename(ids[0], name.into())));
     act(h, PathAction::List(ListOp::Visible(ids[2], false)));

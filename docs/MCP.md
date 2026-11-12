@@ -1,6 +1,7 @@
+[한국어](ko/MCP.md) · [日本語](MCP.md) · [English](en/MCP.md)
+
 # AI のアシスタントから操作する（MCP）
 
-[English](en/MCP.md)
 
 YoluPainter は、設定「外からの操作を受ける」を入れている間、MCP のサーバーとして `http://127.0.0.1:17347/mcp` で待ちます。AI のアシスタント（Claude Code・Codex・
 Claude Desktop など）はここへつなぎ、アプリでいま開いている文書のレイヤー・マスク・効果を読み、値を直し、見本の画像を見て、書き出し・保存ができます。

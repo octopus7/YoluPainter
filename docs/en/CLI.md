@@ -1,6 +1,7 @@
+[한국어](../ko/CLI.md) · [日本語](../CLI.md) · [English](CLI.md)
+
 # Command line (yolupainter-cli)
 
-[日本語](../CLI.md)
 
 `yolupainter-cli` is a small console program that operates YoluPainter `.ylp` projects from commands, either without showing a window or against the app that is running.
 Scripts and AI assistants can use it to read and change layers, masks and effects, get preview images, export and save. AI assistants connect to the running app directly over MCP

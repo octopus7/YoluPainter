@@ -459,7 +459,7 @@ fn the_panels_for_layers_and_stages_have_no_instruction_text_and_the_english_one
         }
         out
     }
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         for kind in SIX {
             let mut h = app(1280.0, 1400.0, 64);
             h.app_mut().set_language(lang);

@@ -1585,7 +1585,7 @@ fn headless_every_library_refusal_has_a_short_sentence_in_both_languages() {
         library::REFUSAL_PNG,
         library::REFUSAL_PNG_SIZE,
     ];
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         let texts: Vec<String> = markers
             .iter()
             .map(|m| {
@@ -2072,6 +2072,9 @@ fn headless_a_fill_layer_the_writer_cannot_hold_is_refused_as_a_material_not_as_
             let want = match lang {
                 Lang::Ja => format!("「{name}」をマテリアルとして保存できません（{ja}）。"),
                 Lang::En => format!("Cannot save \"{name}\" as a material ({en})."),
+                _ => unreachable!(
+                    "This fixture has Japanese/English expectations; see korean_localization.rs"
+                ),
             };
             assert_eq!(s.message(), want);
             assert!(
@@ -2838,7 +2841,7 @@ mod ui {
     /// アセットの画像を使う塗りつぶしでは、項目を押せず、理由がツールチップに出る（日英）。
     #[test]
     fn snapshot_material_menu_and_card() {
-        for lang in Lang::ALL {
+        for lang in [Lang::Ja, Lang::En] {
             let suffix = lang.pick("ja", "en");
             let dir = Dir::new("ui-material");
             let mut h = window(&dir);

@@ -54,6 +54,7 @@ pub fn mask_effects_tip(lang: crate::lang::Lang, count: usize) -> String {
         (1, crate::lang::Lang::En) => "1 effect on the mask".to_owned(),
         (n, crate::lang::Lang::En) => format!("{n} effects on the mask"),
         (n, crate::lang::Lang::Ja) => format!("マスクに効果 {n} 件"),
+        (n, crate::lang::Lang::Ko) => format!("마스크에 효과 {n}개"),
     }
 }
 

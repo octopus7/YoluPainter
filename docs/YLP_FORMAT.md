@@ -1,3 +1,5 @@
+[한국어](ko/YLP_FORMAT.md) · [日本語](YLP_FORMAT.md)
+
 # .ylp ファイルの形式
 
 YoluPainter の作業ファイル `.ylp` の仕様です。

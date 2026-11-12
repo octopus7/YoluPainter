@@ -1141,6 +1141,7 @@ fn list_status(app: &AppState) -> (Option<String>, Option<String>) {
             Some(match lang {
                 Lang::Ja => format!("先頭の {} 件だけ", yolu_io::library::MAX_ENTRIES),
                 Lang::En => format!("First {} only", yolu_io::library::MAX_ENTRIES),
+                Lang::Ko => format!("처음 {}개만 표시", yolu_io::library::MAX_ENTRIES),
             }),
             None,
         );
@@ -1152,6 +1153,7 @@ fn list_status(app: &AppState) -> (Option<String>, Option<String>) {
     let text = match lang {
         Lang::Ja => format!("{} 件を読み飛ばしました", skipped.len()),
         Lang::En => format!("Skipped {}", skipped.len()),
+        Lang::Ko => format!("{}개를 건너뛰었습니다", skipped.len()),
     };
     let mut tip = text.clone();
     for s in skipped.iter().take(8) {
@@ -1585,6 +1587,9 @@ pub fn run_dialog(state: &mut AppState, request: DialogRequest) {
                     Lang::En => format!(
                         "Remove \"{name}\" from the library folder? (Copies inside projects and placed layers stay.)"
                     ),
+                    Lang::Ko => format!(
+                        "라이브러리 폴더에서 \"{name}\" 항목을 삭제할까요? (프로젝트 안의 사본과 배치된 레이어는 유지됩니다.)"
+                    ),
                 })
                 .set_buttons(rfd::MessageButtons::YesNo)
                 .set_level(rfd::MessageLevel::Warning)
@@ -1619,6 +1624,7 @@ pub fn run_dialog(state: &mut AppState, request: DialogRequest) {
                 .set_description(match lang {
                     Lang::Ja => format!("「{name}」をアセットから消しますか？"),
                     Lang::En => format!("Remove \"{name}\" from the project's assets?"),
+                    Lang::Ko => format!("프로젝트 에셋에서 \"{name}\" 항목을 삭제할까요?"),
                 })
                 .set_buttons(rfd::MessageButtons::YesNo)
                 .set_level(rfd::MessageLevel::Warning)

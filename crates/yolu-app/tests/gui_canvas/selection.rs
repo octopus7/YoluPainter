@@ -1560,6 +1560,9 @@ fn headless_refusals_are_told_in_the_language_and_change_nothing() {
                     assert!(m.contains(en), "{m:?}");
                 }
                 Lang::Ja => assert!(m.contains(ja), "{m:?}"),
+                _ => unreachable!(
+                    "This fixture has Japanese/English expectations; see korean_localization.rs"
+                ),
             }
         }
     }
@@ -1630,6 +1633,9 @@ fn headless_selection_file_failures_are_told_in_the_language_and_touch_nothing()
                 assert!(err.contains(en.0) && err.contains(en.1), "{err:?}");
             }
             Lang::Ja => assert!(err.contains(ja.0) && err.contains(ja.1), "{err:?}"),
+            _ => unreachable!(
+                "This fixture has Japanese/English expectations; see korean_localization.rs"
+            ),
         }
         let (mut same, _) = yolu_app::state::blank_document(32, 32);
         restore_into(&mut same, Some(&stored), lang).unwrap();
@@ -1649,6 +1655,9 @@ fn headless_selection_file_failures_are_told_in_the_language_and_touch_nothing()
                 assert!(err.starts_with("Cannot write the selection"), "{err:?}");
             }
             Lang::Ja => assert!(err.starts_with("選択範囲を書けません"), "{err:?}"),
+            _ => unreachable!(
+                "This fixture has Japanese/English expectations; see korean_localization.rs"
+            ),
         }
         assert!(project.sets()[0].selection.is_none());
         // 同じ大きさなら書ける
@@ -2188,6 +2197,9 @@ fn headless_every_edits_status_message_follows_the_language() {
             match lang {
                 Lang::En => assert!(m.is_ascii(), "英語の画面に日本語が混じる: {m:?} ({e:?})"),
                 Lang::Ja => assert!(!m.is_ascii(), "日本語の画面の文: {m:?} ({e:?})"),
+                _ => unreachable!(
+                    "This fixture has Japanese/English expectations; see korean_localization.rs"
+                ),
             }
             if matches!(
                 e,

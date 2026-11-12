@@ -427,7 +427,7 @@ fn shown_texts(h: &Harness<'_, Panel>) -> Vec<String> {
 
 #[test]
 fn the_panels_show_names_and_values_only_in_both_languages() {
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         for kind in [
             AdjustmentType::GradientMap,
             AdjustmentType::ToneCurve,

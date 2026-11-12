@@ -1,4 +1,4 @@
-//! 画面の言葉（日本語と英語）。文は `locales/<言語>/<モジュール>.ftl` に置き、呼ぶ場所はキーで引く（`lang.t("キー")`・引数のある文は
+//! 画面の言葉（日本語・英語・韓国語）。文は `locales/<言語>/<モジュール>.ftl` に置き、呼ぶ場所はキーで引く（`lang.t("キー")`・引数のある文は
 //! `lang.f("キー", &[("名前", &値)])`）。名前・状態・短い理由だけ。説明はツールチップ（キーの終わりが `-tip`）。
 //! 状態は `AppState::lang`。試験は同じ画面で言語を替えて文言を確かめる。
 
@@ -8,16 +8,26 @@ pub enum Lang {
     #[default]
     Ja,
     En,
+    Ko,
 }
 
 impl Lang {
-    pub const ALL: [Lang; 2] = [Lang::Ja, Lang::En];
+    pub const ALL: [Lang; 3] = [Lang::Ja, Lang::En, Lang::Ko];
 
-    /// 言語ごとの値から今の言語のものを選ぶ。
+    /// Stable language identifier for settings and resource names.
+    pub const fn code(self) -> &'static str {
+        match self {
+            Lang::Ja => "ja",
+            Lang::En => "en",
+            Lang::Ko => "ko",
+        }
+    }
+
+    /// Legacy bilingual values. Korean uses English when no Korean value exists.
     pub fn pick<T>(self, ja: T, en: T) -> T {
         match self {
             Lang::Ja => ja,
-            Lang::En => en,
+            Lang::En | Lang::Ko => en,
         }
     }
 
@@ -41,6 +51,7 @@ impl Lang {
         match self {
             Lang::Ja => "日本語",
             Lang::En => "English",
+            Lang::Ko => "한국어",
         }
     }
 
@@ -52,9 +63,9 @@ impl Lang {
         let reason = reason.as_ref().trim().trim_end_matches(['。', '.']);
         match (self, reason.is_empty()) {
             (Lang::Ja, true) => format!("{what}。"),
-            (Lang::En, true) => format!("{what}."),
+            (Lang::En | Lang::Ko, true) => format!("{what}."),
             (Lang::Ja, false) => format!("{what}（{reason}）。"),
-            (Lang::En, false) => format!("{what} ({reason})."),
+            (Lang::En | Lang::Ko, false) => format!("{what} ({reason})."),
         }
     }
 
@@ -65,6 +76,7 @@ impl Lang {
         match self {
             Lang::Ja => format!("テクスチャセット{set}で、{sentence}"),
             Lang::En => format!("In texture set {set}, {}", lower_first(sentence)),
+            Lang::Ko => format!("텍스처 세트 {set}: {sentence}"),
         }
     }
 
@@ -77,7 +89,7 @@ impl Lang {
     pub fn quote(self, name: &str) -> String {
         match self {
             Lang::Ja => format!("「{name}」"),
-            Lang::En => format!("\"{name}\""),
+            Lang::En | Lang::Ko => format!("\"{name}\""),
         }
     }
 }
@@ -87,18 +99,20 @@ impl From<yolu_ops::Lang> for Lang {
         match lang {
             yolu_ops::Lang::Ja => Lang::Ja,
             yolu_ops::Lang::En => Lang::En,
+            yolu_ops::Lang::Ko => Lang::Ko,
         }
     }
 }
 
-/// 初めて起動したときの言語（設定のファイルに言語がまだ無いときだけ使う）。OS の言語が日本語なら日本語、それ以外と分からないときは英語。
+/// First-launch language, used only when no saved language exists. Japanese and
+/// Korean system languages select their matching catalog; other languages use English.
 pub fn system_lang() -> Lang {
     system_lang_from(|name| std::env::var(name).ok(), os_ui_language())
 }
 
 /// `system_lang` の中身。順に見る: 環境変数 `YOLUPAINTER_LANG`（明示の上書き）→ OS の表示言語（`os_ui_language`。Windows だけ）→
-/// ない OS は `LC_ALL`・`LC_MESSAGES`・`LANG`（`ja` で始まれば日本語）。どれでも分からなければ英語。
-/// Windows は、表示言語が日本語以外ならロケールの環境変数（Git Bash などが持ち込む）を見ずに英語にする。
+/// ない OS は `LC_ALL`・`LC_MESSAGES`・`LANG`（`ja`・`ko` を認識）。どれでも分からなければ英語。
+/// Windows は表示言語を優先し、Git Bash などが持ち込むロケールの環境変数は見ない。
 pub fn system_lang_from(get: impl Fn(&str) -> Option<String>, os_ui: Option<u16>) -> Lang {
     let found = yolu_ops::Lang::from_override(&get).or_else(|| match os_ui {
         Some(id) => Some(os_ui_lang(id)),
@@ -107,13 +121,12 @@ pub fn system_lang_from(get: impl Fn(&str) -> Option<String>, os_ui: Option<u16>
     found.map_or(Lang::En, Lang::from)
 }
 
-/// Windows の言語 ID（`LANGID`）の主言語（下位 10 ビット）が日本語か。
+/// Map the primary Windows language ID (the low ten bits) to a supported locale.
 fn os_ui_lang(id: u16) -> yolu_ops::Lang {
-    const LANG_JAPANESE: u16 = 0x11;
-    if id & 0x3ff == LANG_JAPANESE {
-        yolu_ops::Lang::Ja
-    } else {
-        yolu_ops::Lang::En
+    match id & 0x3ff {
+        0x11 => yolu_ops::Lang::Ja,
+        0x12 => yolu_ops::Lang::Ko,
+        _ => yolu_ops::Lang::En,
     }
 }
 

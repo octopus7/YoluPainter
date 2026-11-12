@@ -540,6 +540,7 @@ fn announce(state: &mut AppState, command: &str) {
     let title = spec.title.pick(match lang {
         Lang::Ja => yolu_ops::Lang::Ja,
         Lang::En => yolu_ops::Lang::En,
+        Lang::Ko => yolu_ops::Lang::Ko,
     });
     state.info(
         Source::Ops,

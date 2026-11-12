@@ -351,7 +351,7 @@ fn the_buttons_sit_at_the_right_end_and_the_name_and_marks_stay_left_of_them() {
 /// 最大化中は最大化のボタンが「元に戻す」になる（名前・アイコン）。ボタンの名前は日英で出る。
 #[test]
 fn the_maximize_button_becomes_restore_while_maximized() {
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         let mut h = windows_app(WIDTH, HEIGHT);
         h.set_lang(lang);
         h.run();

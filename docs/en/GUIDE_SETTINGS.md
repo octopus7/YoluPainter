@@ -1,6 +1,7 @@
+[한국어](../ko/GUIDE_SETTINGS.md) · [日本語](../GUIDE_SETTINGS.md) · [English](GUIDE_SETTINGS.md)
+
 # Settings
 
-[日本語](../GUIDE_SETTINGS.md)
 
 This page explains each item in Edit → Settings… (`Ctrl+,`), category by category. The categories are listed on the left; pressing one shows its items on the right. They are General, Pen, Keyboard Shortcuts, Display, Memory, Processing, 3D View, Files, Live Link & Commands and Updates (Updates appears only in builds that can check for updates). The window remembers the category you last opened and starts there the next time. The right side scrolls separately for each category. You can move the window by dragging its title.
 

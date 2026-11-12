@@ -1,6 +1,7 @@
+[한국어](../ko/LIVELINK.md) · [日本語](../LIVELINK.md) · [English](LIVELINK.md)
+
 # Live Link (file exchange)
 
-[日本語](../LIVELINK.md)
 
 This is the specification of how the Unity Bridge in the Unity Editor (VPM package `net.yozolab.yolupainter`) and the standalone YoluPainter exchange JSON files in a folder on the same PC.
 Unity writes a **request** with the chosen target's (a scene object's) **FBX paths, bone values, material values and texture paths**, and the standalone application picks it up and opens it.

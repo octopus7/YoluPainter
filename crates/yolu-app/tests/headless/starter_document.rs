@@ -17,6 +17,7 @@ fn assert_starter(doc: &Document, lang: Lang, why: &str) {
     let (fill_name, layer_name) = match lang {
         Lang::Ja => ("塗りつぶし 1", "レイヤー 1"),
         Lang::En => ("Fill 1", "Layer 1"),
+        Lang::Ko => ("채우기 1", "레이어 1"),
     };
     assert_eq!(doc.layers().len(), 2, "{why}");
     let fill = &doc.layers()[0];
@@ -52,8 +53,8 @@ fn ids(s: &AppState) -> Vec<LayerId> {
 }
 
 #[test]
-fn the_startup_document_is_a_white_fill_under_an_empty_layer_in_both_languages() {
-    for lang in [Lang::Ja, Lang::En] {
+fn the_startup_document_is_a_white_fill_under_an_empty_layer_in_all_languages() {
+    for lang in Lang::ALL {
         let s = AppState::starter_in(lang);
         assert_starter(s.doc(), lang, &format!("{lang:?}"));
         assert_eq!(s.selected_layer(), Some(top(&s)), "選ぶのは空のレイヤー");
@@ -65,6 +66,21 @@ fn the_startup_document_is_a_white_fill_under_an_empty_layer_in_both_languages()
         );
         assert_eq!(s.sets().len(), 1);
     }
+}
+
+#[test]
+fn korean_starter_names_follow_language_changes_until_the_document_is_edited() {
+    let mut s = AppState::starter_in(Lang::Ko);
+    for lang in [Lang::En, Lang::Ja, Lang::Ko] {
+        s.app_mut().set_language(lang);
+        assert_starter(s.doc(), lang, "language switch from Korean starter");
+    }
+    let layer = top(&s);
+    s.doc_mut()
+        .set_pixel(layer, 2, 2, Rgba8::new(1, 2, 3, 255))
+        .unwrap();
+    s.app_mut().set_language(Lang::En);
+    assert_eq!(names(&s), ["채우기 1", "레이어 1"]);
 }
 
 #[test]

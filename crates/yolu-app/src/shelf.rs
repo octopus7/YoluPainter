@@ -2481,6 +2481,17 @@ impl Attempt {
                 Attempt::LibraryRemove => format!("Cannot remove {q} from the library"),
                 Attempt::MaterialSave => format!("Cannot save {q} as a material"),
             },
+            Lang::Ko => match self {
+                Attempt::ShelfSave => format!("프로젝트 에셋에 {q} 항목을 저장할 수 없습니다"),
+                Attempt::ShelfImport => format!("프로젝트 에셋으로 {q} 항목을 가져올 수 없습니다"),
+                Attempt::ShelfChange => "프로젝트 에셋을 변경할 수 없습니다".to_owned(),
+                Attempt::ShelfRemove => format!("프로젝트 에셋에서 {q} 항목을 삭제할 수 없습니다"),
+                Attempt::Place => format!("{q} 항목을 배치할 수 없습니다"),
+                Attempt::LibraryUse => format!("라이브러리에서 {q} 항목을 가져올 수 없습니다"),
+                Attempt::LibraryAdd => format!("라이브러리에 {q} 항목을 추가할 수 없습니다"),
+                Attempt::LibraryRemove => format!("라이브러리에서 {q} 항목을 삭제할 수 없습니다"),
+                Attempt::MaterialSave => format!("{q} 항목을 머티리얼로 저장할 수 없습니다"),
+            },
         }
     }
 }
@@ -2493,6 +2504,7 @@ fn resized_note(lang: Lang, material: &SmartMaterial, resampled: bool) -> String
     match lang {
         Lang::Ja => format!("、{}×{} から変更", material.width(), material.height()),
         Lang::En => format!(", resized from {}×{}", material.width(), material.height()),
+        Lang::Ko => format!(", {}×{}에서 크기 변경", material.width(), material.height()),
     }
 }
 

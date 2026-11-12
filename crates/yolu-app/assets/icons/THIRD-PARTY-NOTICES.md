@@ -1,3 +1,5 @@
+[한국어](THIRD-PARTY-NOTICES.ko.md) · [日本語](THIRD-PARTY-NOTICES.md)
+
 # アイコンの第三者表記
 
 白・48 px の PNG。0.4.x までの Unity ブリッジからコピーしたものと、同じ方法で SVG を白くして描画したものを含む。

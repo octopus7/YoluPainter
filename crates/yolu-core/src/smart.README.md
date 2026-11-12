@@ -1,3 +1,5 @@
+[한국어](smart.README.ko.md) · [日本語](smart.README.md)
+
 # スマート素材
 
 `Document::capture_smart_material` は選んだレイヤーとグループの子孫を独立した断片にします。`capture_smart_mask` はマスクだけを保存します。元の文書と画素の写しは書き込み時に分離します。

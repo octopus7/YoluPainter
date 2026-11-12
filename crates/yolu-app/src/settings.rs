@@ -606,8 +606,12 @@ fn parse_marked(text: &str) -> (Settings, Vec<Problem>, bool) {
         };
         match key.trim() {
             "language" => match value {
-                "ja" | "en" => {
-                    settings.lang = if value == "ja" { Lang::Ja } else { Lang::En };
+                "ja" | "en" | "ko" => {
+                    settings.lang = match value {
+                        "ja" => Lang::Ja,
+                        "ko" => Lang::Ko,
+                        _ => Lang::En,
+                    };
                     has_language = true;
                 }
                 _ => problems.push(Problem::Language(value.to_owned())),
@@ -888,7 +892,7 @@ fn parse_folder(value: &str) -> Option<Option<PathBuf>> {
 
 /// 書く内容。言語は常に、ほかは既定でないものだけ（何も変えていない間は今までと同じ中身）。
 fn render(settings: &Settings) -> String {
-    let mut text = format!("language={}\n", settings.lang.t("settings-en"));
+    let mut text = format!("language={}\n", settings.lang.code());
     let default = Settings::default();
     if settings.export_padding != default.export_padding {
         let value = if settings.export_padding < 0 {
@@ -1607,7 +1611,7 @@ mod tests {
             assert_eq!(problems, vec![]);
             // 言語が書いてあれば、OS の言語によらずそれ
             for saved in Lang::ALL {
-                let text = format!("language={}\nexport_padding=8\n", saved.pick("ja", "en"));
+                let text = format!("language={}\nexport_padding=8\n", saved.code());
                 let (settings, problems) = startup(Some(&text), system);
                 assert_eq!((settings.lang, settings.export_padding), (saved, 8));
                 assert_eq!(problems, vec![]);
@@ -2392,7 +2396,7 @@ mod tests {
             },
             Problem::Backups("5000".into()),
         ];
-        for lang in Lang::ALL {
+        for lang in [Lang::Ja, Lang::En] {
             let texts: Vec<String> = problems.iter().map(|p| p.text(lang)).collect();
             for (i, a) in texts.iter().enumerate() {
                 assert_eq!(a.is_ascii(), lang == Lang::En, "{lang:?} {a}");

@@ -1,6 +1,7 @@
+[한국어](ko/LIVELINK.md) · [日本語](LIVELINK.md) · [English](en/LIVELINK.md)
+
 # Live Link（ファイルの受け渡し）
 
-[English](en/LIVELINK.md)
 
 Unity エディターの Unity ブリッジ（VPM パッケージ `net.yozolab.yolupainter`）とスタンドアロンの YoluPainter が、同じ PC のフォルダに JSON のファイルを置いて受け渡す仕組みの仕様です。
 Unity は、選んだ相手（シーンのオブジェクト）の **FBX のパス・ボーンの値・マテリアルの値と絵のパス**を「頼み」に書いて置き、スタンドアロンがそれを拾って開きます。

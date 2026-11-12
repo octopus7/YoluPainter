@@ -1,6 +1,7 @@
+[한국어](ko/GUIDE_3D.md) · [日本語](GUIDE_3D.md) · [English](en/GUIDE_3D.md)
+
 # 3D ビューとモデル
 
-[English](en/GUIDE_3D.md)
 
 モデルを 3D ビューで見て、動かして、面に描く頁です。FBX を開く、ポーズを付ける、メッシュマップをベイクする、重なった UV を扱う、Unity から開く、もここにあります。
 

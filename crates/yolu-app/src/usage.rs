@@ -263,7 +263,7 @@ mod tests {
             build: Some(build.into()),
             ..Usage::default()
         };
-        for lang in Lang::ALL {
+        for lang in [Lang::Ja, Lang::En] {
             let mark = lang.pick("ベータ版", "Beta");
             // 試験版: 版とビルドの左に印が付く（右端が版とビルド）
             let items = usage("0.4.0-rc.1 · a1b2c3d").items(lang);

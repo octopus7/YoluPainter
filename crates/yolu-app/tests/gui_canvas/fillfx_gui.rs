@@ -512,7 +512,7 @@ fn the_gradient_tool_paints_with_a_real_drag_on_the_canvas_and_shift_g_selects_i
 
 #[test]
 fn the_fill_panel_draws_in_both_languages_without_clipped_text() {
-    for lang in yolu_app::lang::Lang::ALL {
+    for lang in [yolu_app::lang::Lang::Ja, yolu_app::lang::Lang::En] {
         let (mut h, _) = window();
         {
             let s = h.app_mut();
@@ -1217,7 +1217,7 @@ fn a_pen_drag_on_a_point_in_the_2d_canvas_is_one_undo_and_escape_puts_it_back() 
 
 #[test]
 fn the_point_gradient_panel_and_its_markers_draw_in_both_languages() {
-    for lang in yolu_app::lang::Lang::ALL {
+    for lang in [yolu_app::lang::Lang::Ja, yolu_app::lang::Lang::En] {
         let (mut h, rect) = window();
         let layer = {
             let s = h.app_mut();
@@ -1505,7 +1505,7 @@ fn the_point_colour_opens_the_colour_window_and_one_drag_in_it_is_one_undo() {
 
 #[test]
 fn the_image_row_has_an_anisotropic_toggle_that_is_one_undo_step() {
-    for lang in yolu_app::lang::Lang::ALL {
+    for lang in [yolu_app::lang::Lang::Ja, yolu_app::lang::Lang::En] {
         let (mut h, _) = window();
         let layer = {
             let s = h.app_mut();

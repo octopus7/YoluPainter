@@ -1,6 +1,7 @@
+[한국어](ko/BUILDING.md) · [日本語](BUILDING.md) · [English](en/BUILDING.md)
+
 # ソースからのビルド
 
-[English](en/BUILDING.md)
 
 Rust の stable ツールチェーンと C/C++ のビルド環境が必要です。導入方法は [Rust のインストール手順](https://doc.rust-lang.org/book/ch01-01-installation.html)を参照してください。ソースを取得・展開し、`Cargo.toml` のあるフォルダで次のコマンドを実行します。初回のビルドには依存パッケージを取得するネット接続が必要です。
 

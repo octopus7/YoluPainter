@@ -5553,7 +5553,7 @@
         ],
         "license_file": {
           "path": "crates/yolu-app/assets/fonts/THIRD-PARTY-NOTICES.md",
-          "sha256": "831d23e389627b8c47c2d1e9740ad98cfb1d42288bb5a69a9baa95d976edd00c"
+          "sha256": "8f3f5d98b733e53e4ea5ea5c1a0d3e80c6d10ac0d5a57fec6be90dbaca84a812"
         },
         "file_globs": [
           "crates/yolu-app/assets/fonts/*.ttf"
@@ -6058,7 +6058,7 @@
         ],
         "license_file": {
           "path": "crates/yolu-app/assets/icons/THIRD-PARTY-NOTICES.md",
-          "sha256": "1069e6fc1332e520f65ed64dcac7d5f68d99b1e373e5f471587cb82f305e8afc"
+          "sha256": "7ca093b31dfa72ba69cd49df9f4da834e5be4e4522c8ef201f9ed5aabbd461ac"
         }
       },
       {
@@ -6376,7 +6376,7 @@
           },
           {
             "path": "crates/yolu-brush-sets/data/krita4/README.md",
-            "sha256": "2acf9fee5a34a1a10a6984de483826ddbbf96c9fb8b3a6a2d203b2b1f32c5622"
+            "sha256": "6992f316dad69f20dc085c59f857752560b864d5c7595d843c78cf02a36cb80e"
           },
           {
             "path": "crates/yolu-brush-sets/data/krita4/meta.xml",
@@ -6392,7 +6392,7 @@
         ],
         "license_file": {
           "path": "crates/yolu-app/assets/brushes/THIRD-PARTY-NOTICES.md",
-          "sha256": "0ce758c1725a0ad668aa76c2e700160b578d27999639f2b211ef415a5d0b0ac3"
+          "sha256": "bdfef4953ff5f89d78e0143159c9ed5a57b1f175d59d7b54b2cfea82b633915e"
         }
       },
       {
@@ -6406,13 +6406,44 @@
         "files": [
           {
             "path": "crates/yolu-app/src/view3d/shaders/THIRD-PARTY-NOTICES.md",
-            "sha256": "5d289c57f0ffda16e8aa5b1eec476d2903bc783d173e12b31944f7177b1cb4ab"
+            "sha256": "ce239df23e0da4ac9e9625ca011cce507365fc695ae8480d7a6502f243a2f398"
           }
         ],
         "license_file": {
           "path": "crates/yolu-app/src/view3d/shaders/THIRD-PARTY-NOTICES.md",
-          "sha256": "5d289c57f0ffda16e8aa5b1eec476d2903bc783d173e12b31944f7177b1cb4ab"
+          "sha256": "ce239df23e0da4ac9e9625ca011cce507365fc695ae8480d7a6502f243a2f398"
         }
+      },
+      {
+        "name": "YoluPainter Hangul (Noto Sans CJK KR subset)",
+        "version": "2.004",
+        "declared": "OFL-1.1",
+        "selected": [
+          "OFL-1.1"
+        ],
+        "repository": "https://github.com/notofonts/noto-cjk",
+        "files": [
+          {
+            "path": "crates/yolu-app/assets/fonts/YoluPainterHangul-Regular.otf",
+            "sha256": "2aa7e77df9f806d43555d902073e7cd353d704ab58cd15de4163be3e0067936d"
+          },
+          {
+            "path": "crates/yolu-app/assets/fonts/YoluPainterHangul-Bold.otf",
+            "sha256": "6b980f62bebea45a73044587692bb77cffcebea5a69dc1a84cd8fb814532d98d"
+          },
+          {
+            "path": "crates/yolu-app/assets/fonts/OFL-Noto-CJK.txt",
+            "sha256": "ebba7ca34c39d68f26adf3b2f991c5b40d22a24bb29b867fa26221635bc68dbc"
+          }
+        ],
+        "license_file": {
+          "path": "crates/yolu-app/assets/fonts/THIRD-PARTY-NOTICES-Hangul.md",
+          "sha256": "64c6f39ac58ccf7cc38143a4042cfc3acd6b0a8a597ca845a6d5e7a8f42d7c3e"
+        },
+        "file_globs": [
+          "crates/yolu-app/assets/fonts/YoluPainterHangul-*.otf"
+        ],
+        "origin": "https://github.com/notofonts/noto-cjk — Noto Sans CJK KR 2.004, Korean face (index 1)"
       }
     ]
   },

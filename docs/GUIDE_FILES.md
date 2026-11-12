@@ -1,6 +1,7 @@
+[한국어](ko/GUIDE_FILES.md) · [日本語](GUIDE_FILES.md) · [English](en/GUIDE_FILES.md)
+
 # 保存・書き出し・取り込み
 
-[English](en/GUIDE_FILES.md)
 
 プロジェクト（`.ylp`）の保存、配布用の写し、落ちたときの復旧、PNG と PSD の書き出し・取り込み、大きな文書のためのディスクキャッシュの頁です。新規作成と開く操作は [GUIDE_START.md](GUIDE_START.md) にあります。
 

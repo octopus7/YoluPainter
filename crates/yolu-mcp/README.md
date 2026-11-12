@@ -1,3 +1,5 @@
+[한국어](README.ko.md) · [日本語](README.md)
+
 # yolu-mcp
 
 YoluPainter の MCP サーバーの中身と、手元の HTTP の受け口・客です。起動中のアプリ（yolu-app の `mcp_server`）が受け口を動かし、

@@ -188,10 +188,11 @@ fn the_stateless_2026_07_28_flow_reaches_the_app() {
     assert_eq!(called["resultType"], "complete");
     assert_eq!(called["structuredContent"]["name"], "Body");
     let read = relay.result("resources/read", json!({"uri": "yolupainter://docs/mcp"}));
-    assert!(read["contents"][0]["text"]
-        .as_str()
-        .unwrap()
-        .starts_with("# "));
+    assert_eq!(
+        read["contents"][0]["text"].as_str().unwrap(),
+        include_str!("../../../docs/en/MCP.md"),
+        "embedded documentation includes its language navigation and heading"
+    );
 }
 
 #[test]

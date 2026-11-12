@@ -640,6 +640,14 @@ fn help_version_and_the_environment_language() {
     assert!(help.stdout.contains("yolupainter-cli") && help.stdout.contains("--file"));
     let ja = fx.cli(&["--help", "--lang", "ja"]);
     assert!(ja.stdout.contains("使い方"));
+    let ko = fx.cli(&["--help", "--lang", "ko"]);
+    assert_eq!(ko.code, 0);
+    assert!(ko.stdout.contains("--lang ja|en|ko"));
+    assert_eq!(
+        ko.stdout,
+        fx.cli(&["--help", "--lang", "en"]).stdout,
+        "legacy CLI messages fall back to English for Korean"
+    );
     assert_eq!(fx.cli(&[]).stdout, help.stdout, "引数なしは使い方");
     let version = fx.cli(&["--version"]);
     assert!(version

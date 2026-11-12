@@ -1,6 +1,7 @@
+[한국어](../ko/GUIDE_START.md) · [日本語](../GUIDE_START.md) · [English](GUIDE_START.md)
+
 # Getting Started
 
-[日本語](../GUIDE_START.md)
 
 This page covers the screen layout, creating and opening projects, your first stroke, moving the 2D view, and arranging panels. When YoluPainter starts, it opens a 2048 × 2048 canvas and a demo cube. The first layers are a white solid fill layer ("Fill 1") at the bottom and an empty "Layer 1" above it, and the empty layer is selected.
 

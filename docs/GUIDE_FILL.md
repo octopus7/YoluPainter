@@ -1,6 +1,7 @@
+[한국어](ko/GUIDE_FILL.md) · [日本語](GUIDE_FILL.md) · [English](en/GUIDE_FILL.md)
+
 # 塗りつぶしと効果
 
-[English](en/GUIDE_FILL.md)
 
 値・画像・グラデーションで面を塗る塗りつぶしレイヤー、レイヤーの画素やマスクに重ねる効果、素材を使い回すアセットとライブラリ、操作の記録と再生の頁です。
 

@@ -1575,6 +1575,7 @@ fn points_section(
         let name = match lang {
             Lang::Ja => format!("点 {}", i + 1),
             Lang::En => format!("Point {}", i + 1),
+            Lang::Ko => format!("포인트 {}", i + 1),
         };
         if w::button(
             ui,
@@ -1716,6 +1717,7 @@ fn point_color(
     let name = match lang {
         Lang::Ja => format!("点 {} の色", index + 1),
         Lang::En => format!("Point {} Color", index + 1),
+        Lang::Ko => format!("포인트 {} 색상", index + 1),
     };
     let last_id = egui::Id::new(("fill.points.color.last", doc, layer.0, channel.index()));
     let last = ctx.data(|d| d.get_temp::<usize>(last_id));

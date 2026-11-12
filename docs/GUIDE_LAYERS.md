@@ -1,6 +1,7 @@
+[한국어](ko/GUIDE_LAYERS.md) · [日本語](GUIDE_LAYERS.md) · [English](en/GUIDE_LAYERS.md)
+
 # レイヤーとチャンネル
 
-[English](en/GUIDE_LAYERS.md)
 
 レイヤーの作り方と整え方、マスク、調整レイヤー、チャンネルの使い方です。塗りつぶしレイヤーと、レイヤーに付ける効果（フィルター・ジェネレーター）は [GUIDE_FILL.md](GUIDE_FILL.md) にあります。
 

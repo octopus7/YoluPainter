@@ -64,7 +64,7 @@ fn embed_locales() {
         println!("cargo:rerun-if-changed={}", root.display());
     }
     let mut out = String::new();
-    for (name, dir) in [("JA", "ja"), ("EN", "en")] {
+    for (name, dir) in [("JA", "ja"), ("EN", "en"), ("KO", "ko")] {
         let mut files: Vec<_> = std::fs::read_dir(root.join(dir))
             .into_iter()
             .flatten()

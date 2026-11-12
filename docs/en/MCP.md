@@ -1,6 +1,7 @@
+[한국어](../ko/MCP.md) · [日本語](../MCP.md) · [English](MCP.md)
+
 # Operating from an AI assistant (MCP)
 
-[日本語](../MCP.md)
 
 While "Accept external commands" is on in its settings, YoluPainter is an MCP server at `http://127.0.0.1:17347/mcp`. AI assistants (Claude Code, Codex,
 Claude Desktop and others) connect there to read the layers, masks and effects of the document open in the app, change values, look at preview images, export and save.

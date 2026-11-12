@@ -1,6 +1,7 @@
+[한국어](../ko/GUIDE.md) · [日本語](../GUIDE.md) · [English](GUIDE.md)
+
 # User Guide
 
-[日本語](../GUIDE.md)
 
 YoluPainter is an app for making the textures of 3D models by painting on both a 2D canvas and the 3D view. You work with layers, masks, effects and per-channel painting, save your work as a `.ylp`, and export PNG or PSD.
 

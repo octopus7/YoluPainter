@@ -36,7 +36,8 @@ PRODUCT_KEY = r'HKCU\Software\Microsoft\Windows\CurrentVersion\Uninstall\YoluPai
 SCRIPT = ROOT / 'installer/yolupainter.nsi'
 # 入れる実行ファイル（アプリと、コマンドライン・MCP サーバー）
 EXES = ['yolupainter.exe', 'yolupainter-cli.exe']
-ROOT_FILES = ['LICENSE', 'README.md', 'README.en.md', 'THIRD_PARTY.md', 'DEPENDENCIES.md', 'THIRD_PARTY_LICENSES.txt']
+ROOT_FILES = ['LICENSE', 'README.md', 'README.jp.md', 'README.en.md', 'THIRD_PARTY.md', 'THIRD_PARTY.ko.md',
+              'CHANGELOG.md', 'CHANGELOG.ko.md', 'KOREAN_SUPPORT.md', 'DEPENDENCIES.md', 'THIRD_PARTY_LICENSES.txt']
 # アプリが %APPDATA%\YoluPainter（設定のフォルダ）と %LOCALAPPDATA%\YoluPainter に作る物。どれがどちらかは docs/INSTALL.md の表と同じ。
 # 作り直せる物（/DELETEDATA で消える）
 REBUILDABLE_ROAMING = ['settings.conf', 'recovery.conf', 'update.conf', 'layout.json', 'places.conf', 'settings.4242.pending', 'layout.json.4242.pending',

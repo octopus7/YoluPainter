@@ -9,7 +9,7 @@ use crate::scene::Scene;
 use crate::sketches;
 
 pub const USAGE: &str = "usage: mock --list | --panel <name> | --sketch <name> | --gallery \
-[--png <out.png>] [--lang ja|en] [--size <width>x<height>] [--scale <factor>] [--scene empty|layers]";
+[--png <out.png>] [--lang ja|en|ko] [--size <width>x<height>] [--scale <factor>] [--scene empty|layers]";
 
 /// 大きさ（論理の点）の上限と、拡大率の上限。
 pub const MAX_POINTS: f32 = 8192.0;
@@ -103,6 +103,7 @@ pub fn parse(args: &[String]) -> Result<Command, String> {
                 lang = match value("--lang")?.as_str() {
                     "ja" => Lang::Ja,
                     "en" => Lang::En,
+                    "ko" => Lang::Ko,
                     other => return Err(format!("unknown language: {other}")),
                 }
             }
@@ -176,6 +177,12 @@ mod tests {
     #[test]
     fn list_needs_no_target() {
         assert_eq!(parse(&args(&["--list"])), Ok(Command::List));
+    }
+
+    #[test]
+    fn korean_is_available_for_rendering_previews() {
+        assert_eq!(show(&["--panel", "layers", "--lang", "ko"]).lang, Lang::Ko);
+        assert!(USAGE.contains("ja|en|ko"));
     }
 
     #[test]

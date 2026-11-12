@@ -253,7 +253,7 @@ fn repeated_poses_do_not_rebuild_the_edges_and_a_hidden_overlay_builds_nothing()
 #[test]
 fn edges_over_the_limit_draw_nothing_and_the_tooltip_says_why() {
     let ctx = context();
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         let mut app = demo_app();
         app.lang = lang;
         let lines = frame(&ctx, &mut app);
@@ -300,7 +300,7 @@ fn the_icon_and_the_menu_item_are_disabled_without_a_model() {
         _ => unreachable!(),
     };
     let ctx = context();
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         let mut app = AppState::new(64, 32);
         app.lang = lang;
         assert!(!enabled(&app));

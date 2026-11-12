@@ -1,6 +1,7 @@
+[한국어](../ko/INSTALL.md) · [日本語](../INSTALL.md) · [English](INSTALL.md)
+
 # Download and updates
 
-[日本語](../INSTALL.md)
 
 Download from [Releases](https://github.com/YozoraKurage/YoluPainter/releases). Windows (64-bit) has two distribution formats, an installer and a zip. An extension for Claude Desktop (`.mcpb`) is attached too. Linux has tar.gz files (x86_64, and an experimental ARM build) ([below](#linux)). Mac has an experimental zip ([below](#mac-experimental)).
 

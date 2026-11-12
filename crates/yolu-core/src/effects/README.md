@@ -1,3 +1,5 @@
+[한국어](README.ko.md) · [日本語](README.md)
+
 # レイヤーに付ける効果
 
 レイヤーとマスクにはフィルターの並び（`filters`）、レイヤーには Generator の設定、Anchor の参照、塗りつぶしの画像と投影、チャンネルごとのグラデーション、2D・3D のパス（`LayerPath`）を持たせられます。効果は標準チャンネル（Color・Roughness・Metallic・Height・Normal・Emission の 0〜5 番）だけが対象です。どれも `Document` の編集 API で変え、1 つの編集が 1 回の Undo になります。強さ・設定・投影・グラデーションのドラッグは続けて 1 回にまとまります。断った編集は何も変えません。

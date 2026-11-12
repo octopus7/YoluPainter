@@ -913,6 +913,9 @@ fn headless_clipboard_notices_do_not_end_in_a_full_stop_and_use_the_language_s_b
             match lang {
                 Lang::Ja => assert!(!notice.contains(['(', ')', '.']), "{notice}"),
                 Lang::En => assert!(notice.is_ascii() && !notice.contains('。'), "{notice}"),
+                _ => unreachable!(
+                    "This fixture has Japanese/English expectations; see korean_localization.rs"
+                ),
             }
         }
         // 補足は 1 つの括弧に並べる

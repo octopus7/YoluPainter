@@ -937,10 +937,12 @@ fn the_status_bar_and_the_view_corners_show_no_developer_numbers() {
         );
     }
     // 画面の文字（ツールチップ以外）のうち、メモリの量・タイルの数・合成の方式は、理由として断る文にだけある（原文を確かめて足す）
-    const REASONS: [&str; 6] = [
+    const REASONS: [&str; 7] = [
         "ファイルが {} MiB を超えています",
         // FBX を読まない理由（ファイルの大きさと上限。yolu-model の日本語の文の英語）
         "File too large ({:.1} MiB, maximum {:.0} MiB)",
+        // The same file-size refusal in the Korean diagnostic catalog.
+        "파일이 너무 큽니다 ({:.1} MiB, 최대 {:.0} MiB)",
         "タイルの大きさ {} は共有メモリで使えません（16〜1024 の 2 の冪）",
         "Invalid shared tile size {} (power of two, 16–1024)",
         "3D を描けません（GPU なし）",

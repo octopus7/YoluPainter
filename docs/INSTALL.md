@@ -1,6 +1,7 @@
+[한국어](ko/INSTALL.md) · [日本語](INSTALL.md) · [English](en/INSTALL.md)
+
 # ダウンロードと更新
 
-[English](en/INSTALL.md)
 
 [Releases](https://github.com/YozoraKurage/YoluPainter/releases) から入手します。Windows（64 ビット）には、インストーラーと zip の 2 つの形があります。Claude Desktop 用の拡張（`.mcpb`）も付きます。Linux には tar.gz（x86_64 と、試作の ARM）があります（[下](#linux)）。Mac には試作の zip があります（[下](#mac試作)）。
 

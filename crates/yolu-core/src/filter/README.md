@@ -1,3 +1,5 @@
+[한국어](README.ko.md) · [日本語](README.md)
+
 # 非破壊フィルター
 
 `filter::evaluate` は読み取り専用の `Source` と順序付きの `Stage` を受け、指定領域の RGBA8 を返す。画像全体がメモリにある場合は

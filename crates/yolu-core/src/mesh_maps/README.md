@@ -1,3 +1,5 @@
+[한국어](README.ko.md) · [日本語](README.md)
+
 # メッシュマップ
 
 `MeshBakeInput::new` に三角形ごとの位置・UV・スロットと任意の頂点属性を渡し、`bake` で焼く。

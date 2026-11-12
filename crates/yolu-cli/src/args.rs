@@ -140,11 +140,11 @@ pub fn parse(tokens: &[String], source: Source<'_>) -> Result<Invocation, OpErro
             "help" => want = Some(Action::Help),
             "version" => want = Some(Action::Version),
             "lang" => {
-                let text = take("ja or en")?;
+                let text = take("ja, en or ko")?;
                 global.lang = Some(Lang::parse(&text).ok_or_else(|| {
                     usage_error(
-                        format!("--lang は ja か en です（{text}）"),
-                        format!("--lang is ja or en (got {text})"),
+                        format!("--lang は ja・en・ko のいずれかです（{text}）"),
+                        format!("--lang is ja, en or ko (got {text})"),
                     )
                 })?);
             }

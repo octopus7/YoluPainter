@@ -1,6 +1,7 @@
+[한국어](../ko/GUIDE_KEYS.md) · [日本語](../GUIDE_KEYS.md) · [English](GUIDE_KEYS.md)
+
 # Keyboard Shortcuts
 
-[日本語](../GUIDE_KEYS.md)
 
 A list of keyboard, mouse and pen controls. You can view and change the keys and mouse combinations in the Keyboard Shortcuts category of Edit → Settings… in the app (see "Change shortcuts" below). The tables under "Default assignments" below are made from the app's table and show the assignments before any change. On Mac, read `Ctrl` in these tables as `Command` (menus show `Cmd` too). The one exception is `Ctrl+Tab` for the mode pie menu, which is `Control` on Mac as well.
 

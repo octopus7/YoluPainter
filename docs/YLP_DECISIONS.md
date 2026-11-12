@@ -1,3 +1,5 @@
+[한국어](ko/YLP_DECISIONS.md) · [日本語](YLP_DECISIONS.md)
+
 # .ylp の形式を決めた理由
 
 .ylp の形式（[YLP_FORMAT.md](YLP_FORMAT.md)）の形を選んだ理由・採らなかった案・保証の射程です。

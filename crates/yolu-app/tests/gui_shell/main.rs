@@ -20,6 +20,7 @@ mod dropin;
 mod fonts;
 mod gpu_lost;
 mod i18n;
+mod korean;
 mod layer_sets;
 mod layout;
 mod library;

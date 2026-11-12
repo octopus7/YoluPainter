@@ -1,3 +1,5 @@
+[한국어](README.ko.md) · [日本語](README.md)
+
 # PSDの人工フィクスチャ
 
 `csharp.bin.gz` は 0.4.x までの Unity ブリッジの純C# `PsdCodec` と `Tests/Editor/Psd` の人工データから生成した正解集。ユーザーのファイルやPhotoshop/CSPで作った実データは含まない。出典コミットとソース指紋は `source.txt`。

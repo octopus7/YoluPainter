@@ -55,6 +55,9 @@ fn sample(lang: Lang) -> AppState {
     let names = match lang {
         Lang::Ja => ["汚しの下地", "縁の摩耗", "マスクを反転"],
         Lang::En => ["Grime Base", "Edge Wear", "Invert Mask"],
+        _ => unreachable!(
+            "This fixture has Japanese/English expectations; see korean_localization.rs"
+        ),
     };
     for name in names {
         let command = yolu_ops::parse_command(
@@ -70,7 +73,7 @@ fn sample(lang: Lang) -> AppState {
 #[test]
 fn actions_panel_snapshot() {
     let mut snapshots = egui_kittest::SnapshotResults::new();
-    for lang in Lang::ALL {
+    for lang in [Lang::Ja, Lang::En] {
         let mut h = harness(sample(lang), vec2(300.0, 160.0));
         h.run();
         if lang == Lang::Ja {

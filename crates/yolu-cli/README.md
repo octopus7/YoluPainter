@@ -1,3 +1,5 @@
+[한국어](README.ko.md) · [日本語](README.md)
+
 # yolu-cli
 
 `yolupainter-cli`: 命令（[yolu-ops](../yolu-ops/README.md)）を、コマンドラインから `.ylp`（画面なし）か起動中のアプリへ当てます。`yolupainter-cli mcp` は、

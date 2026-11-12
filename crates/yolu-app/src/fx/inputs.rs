@@ -326,6 +326,13 @@ pub fn missing_text(
             }
             format!("Effect inputs are missing ({text})")
         }
+        Lang::Ko => {
+            let mut text = shown.join("; ");
+            if more > 0 {
+                text += &format!(" 외 {more}개");
+            }
+            format!("효과에 필요한 입력이 없습니다 ({text})")
+        }
     }
 }
 

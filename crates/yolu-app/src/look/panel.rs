@@ -972,7 +972,7 @@ fn default_name(lang: Lang, d: SlotDefault) -> &'static str {
 fn drawn_name(lang: Lang, d: SlotDefault) -> String {
     let name = default_name(lang, d);
     match lang {
-        Lang::Ja => name.to_owned(),
+        Lang::Ja | Lang::Ko => name.to_owned(),
         Lang::En => name.to_lowercase(),
     }
 }

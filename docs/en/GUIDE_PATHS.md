@@ -1,6 +1,7 @@
+[한국어](../ko/GUIDE_PATHS.md) · [日本語](../GUIDE_PATHS.md) · [English](GUIDE_PATHS.md)
+
 # Paths
 
-[日本語](../GUIDE_PATHS.md)
 
 The Path tool (`P`) draws an editable curve through a series of points, on the 2D canvas or on the surface of the model. Every time you change a point or a setting, the pixels are redrawn from the curve. The keys are listed in [GUIDE_KEYS.md](GUIDE_KEYS.md).
 

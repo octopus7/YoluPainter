@@ -1,3 +1,5 @@
+[한국어](THIRD-PARTY-NOTICES.ko.md) · [日本語](THIRD-PARTY-NOTICES.md)
+
 # BIZ UDPGothic の第三者表記
 
 Regular と Bold は [googlefonts/morisawa-biz-ud-gothic v1.051](https://github.com/googlefonts/morisawa-biz-ud-gothic/tree/18934af56b9c003ca58c54bffbf226848cb11032) の TTF を変更せず同梱している。

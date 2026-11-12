@@ -700,6 +700,37 @@ pub fn dual_mode_label(lang: Lang, mode: DualBrushMode) -> &'static str {
 
 /// 合成モードの名前（日本語は Unity 版と同じ、英語は Photoshop の呼び名）。
 pub fn blend_label(lang: Lang, mode: BlendMode) -> &'static str {
+    if lang == Lang::Ko {
+        return match mode {
+            BlendMode::Normal => "일반",
+            BlendMode::Multiply => "곱하기",
+            BlendMode::Screen => "스크린",
+            BlendMode::Overlay => "오버레이",
+            BlendMode::Darken => "어둡게",
+            BlendMode::Lighten => "밝게",
+            BlendMode::ColorDodge => "색상 닷지",
+            BlendMode::ColorBurn => "색상 번",
+            BlendMode::LinearDodge => "선형 닷지 (추가)",
+            BlendMode::LinearBurn => "선형 번",
+            BlendMode::HardLight => "하드 라이트",
+            BlendMode::SoftLight => "소프트 라이트",
+            BlendMode::VividLight => "선명한 라이트",
+            BlendMode::LinearLight => "선형 라이트",
+            BlendMode::PinLight => "핀 라이트",
+            BlendMode::HardMix => "하드 믹스",
+            BlendMode::Difference => "차이",
+            BlendMode::Exclusion => "제외",
+            BlendMode::Subtract => "빼기",
+            BlendMode::Divide => "나누기",
+            BlendMode::Hue => "색조",
+            BlendMode::Saturation => "채도",
+            BlendMode::Color => "색상",
+            BlendMode::Luminosity => "광도",
+            BlendMode::DarkerColor => "어두운 색상",
+            BlendMode::LighterColor => "밝은 색상",
+            BlendMode::PassThrough => "통과",
+        };
+    }
     if lang == Lang::Ja {
         return crate::state::blend_name(mode);
     }

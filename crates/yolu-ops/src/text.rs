@@ -10,22 +10,27 @@ pub enum Lang {
     #[default]
     Ja,
     En,
+    Ko,
 }
 
 impl Lang {
-    /// `ja` / `en`（大文字小文字・`ja-JP` のような後ろの印は問わない）から。
+    /// `ja` / `en` / `ko`（大文字小文字・`ja-JP` のような後ろの印は問わない）から。
     pub fn parse(text: &str) -> Option<Lang> {
         let head = text.split(['-', '_']).next()?.to_ascii_lowercase();
         match head.as_str() {
             "ja" => Some(Lang::Ja),
             "en" => Some(Lang::En),
+            "ko" => Some(Lang::Ko),
             _ => None,
         }
     }
     pub fn pick<T>(self, ja: T, en: T) -> T {
         match self {
             Lang::Ja => ja,
-            Lang::En => en,
+            // Protocol messages carry the original ja/en fields. Korean UI text
+            // is provided by yolu-app's Fluent catalog; use English for legacy
+            // command-line and protocol messages without a Korean field.
+            Lang::En | Lang::Ko => en,
         }
     }
 
@@ -74,7 +79,7 @@ impl Text {
     pub fn pick(&self, lang: Lang) -> &str {
         match lang {
             Lang::Ja => &self.ja,
-            Lang::En => &self.en,
+            Lang::En | Lang::Ko => &self.en,
         }
     }
 }
@@ -100,6 +105,17 @@ mod tests {
     }
 
     /// 環境変数の言語は、上書き → `LC_ALL` → `LC_MESSAGES` → `LANG` の順で、読めない値は飛ばす。
+    #[test]
+    fn korean_locale_is_recognized_and_serializes_as_ko() {
+        for locale in ["ko", "ko-KR", "ko_KR.UTF-8", "KO-kr"] {
+            let lang = Lang::parse(locale).expect("Korean is a supported language");
+            assert_eq!(serde_json::to_string(&lang).unwrap(), "\"ko\"");
+        }
+        let lang = Lang::from_vars(vars(&[("LANG", "ko_KR.UTF-8")]))
+            .expect("Korean locale should be detected");
+        assert_eq!(serde_json::to_string(&lang).unwrap(), "\"ko\"");
+    }
+
     #[test]
     fn variables_are_read_in_order_and_unreadable_values_are_skipped() {
         assert_eq!(Lang::from_vars(vars(&[])), None);

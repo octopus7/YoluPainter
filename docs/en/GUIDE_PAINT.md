@@ -1,6 +1,7 @@
+[한국어](../ko/GUIDE_PAINT.md) · [日本語](../GUIDE_PAINT.md) · [English](GUIDE_PAINT.md)
+
 # Painting
 
-[日本語](../GUIDE_PAINT.md)
 
 This page covers brushes and the eraser, pen pressure, lines, shapes and rulers, symmetry, Fill and Gradient, colors, the stencil and the Text tool. For fill layers and painting with materials, see [GUIDE_FILL.md](GUIDE_FILL.md). For paths, see [GUIDE_PATHS.md](GUIDE_PATHS.md). For painting in the 3D view, see [GUIDE_3D.md](GUIDE_3D.md).
 

@@ -1527,6 +1527,37 @@ pub fn report_lines(lang: Lang, r: &MeshBakeReport) -> Vec<(String, bool)> {
 
 /// 記録の注意の文（日本語は core の文、英語は短い文）。
 pub fn note_text(lang: Lang, note: &MeshBakeNote) -> String {
+    if lang == Lang::Ko {
+        return match note {
+            MeshBakeNote::OverlappingTexels(n) => {
+                format!("텍셀 {n}개의 UV가 겹칩니다 (삼각형 인덱스가 작은 쪽을 사용)")
+            }
+            MeshBakeNote::ZeroUvAreaTriangles(n) => {
+                format!("삼각형 {n}개의 UV 면적이 없습니다 (베이크하지 않지만 가림에는 사용)")
+            }
+            MeshBakeNote::FaceNormals => "정점 노멀이 없습니다 (면 노멀을 사용)".into(),
+            MeshBakeNote::ReconstructedNormals(_) => {
+                "형상에서 정점 노멀을 다시 만들었습니다. 편집한 노멀은 재현하지 않습니다".into()
+            }
+            MeshBakeNote::TangentFallback(n) => {
+                format!("삼각형 {n}개에 탄젠트가 없습니다 (UV에서 생성)")
+            }
+            MeshBakeNote::IgnoredEdges(n) => {
+                format!("비다양체 또는 방향이 뒤집힌 모서리 {n}개가 있습니다 (곡률 계산에서 제외)")
+            }
+            MeshBakeNote::MissedSamples {
+                missed, projected, ..
+            } => format!(
+                "샘플 {projected}개 중 {missed}개가 하이폴리에 닿지 않아 이 모델을 사용했습니다"
+            ),
+            MeshBakeNote::ManualIdColors(n) => format!("수동 ID 색상이 부품 {n}개를 덮어씁니다"),
+            MeshBakeNote::NoVertexColors => "정점 색상이 없습니다 (ID는 흰색)".into(),
+            MeshBakeNote::IdParts { parts, .. } => format!("ID 부품 {parts}개"),
+            MeshBakeNote::NoReference => {
+                "하이폴리가 없습니다 (탄젠트 노멀은 평면, 높이는 0.5)".into()
+            }
+        };
+    }
     if lang == Lang::Ja {
         // 法線の由来・ID の分け方の名前（方式の名前）は画面に出さない（記録の `MeshBakeNote` には残る）
         return match note {
